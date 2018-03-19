@@ -420,4 +420,8 @@ elseif has('unix')
     " map <F9> :w <CR> :!g++ % -o %< && ./%< <CR>
 endif
 
-
+" Tag list (ctags)
+let Tlist_Show_One_File = 1
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Use_Right_Window = 1
+map <silent> <F9> :TlistToggle<cr> 
