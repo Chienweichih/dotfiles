@@ -1,0 +1,7 @@
+BoldAsFont=-1
+ThemeFile=rosipov
+CursorType=block
+Transparency=low
+FontHeight=14
+Font=Meslo LG L Regular for Powerline
+Term=xterm-256color
