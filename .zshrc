@@ -59,7 +59,7 @@
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  dirhistory encode64 git rand-quote tig vi-mode web-search
+  dirhistory encode64 git rand-quote tig web-search
 )
 
 source $ZSH/oh-my-zsh.sh

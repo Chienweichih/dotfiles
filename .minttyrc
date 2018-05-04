@@ -1,7 +1,7 @@
 BoldAsFont=-1
-ThemeFile=rosipov
+ThemeFile=flat-ui
 CursorType=block
 Transparency=low
 FontHeight=14
-Font=Meslo LG L Regular for Powerline
+Font=Meslo LG M Regular for Powerline
 Term=xterm-256color
