@@ -8,6 +8,8 @@
 [alias]
     lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)-%an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%C(dim white)- %an%C(reset)' --all
+    pt  = !git tag -l | xargs git tag -d && git fetch -t
+    gcn = !git reflog expire --all --expire=now && git gc --prune=now --aggressive
 [merge]
     tool = vimdiff
 [diff]
