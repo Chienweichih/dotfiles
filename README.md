@@ -6,6 +6,7 @@
 
 2. git 的設定  
 修改 .gitconfig  
+修改 .tigrc  
 使用 diff-so-fancy  
 diff-so-fancy  
 [https://github.com/so-fancy/diff-so-fancy/blob/master/diff-so-fancy](https://github.com/so-fancy/diff-so-fancy/blob/master/diff-so-fancy)  

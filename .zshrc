@@ -92,5 +92,4 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-  alias pacman-autoclean="pacman -R $(pacman -Qdtq)"
   alias astyle_="astyle --style=ansi --indent=spaces=4 --indent-switches --indent-preproc-cond --min-conditional-indent=0 --indent-col1-comments"
