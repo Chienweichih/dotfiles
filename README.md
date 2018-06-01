@@ -30,11 +30,10 @@ MONACO.TTF
 修改 .zshrc
 
 6. vim  
-安裝 taglist  
-.vim/doc/taglist.txt  
-.vim/plugin/taglist.vim  
-[https://www.vim.org/scripts/script.php?script_id=273](https://www.vim.org/scripts/script.php?script_id=273)  
-修改 .vimrc
+參考 [http://ivan7645.github.io/2016/07/12/vim_to_si/](http://ivan7645.github.io/2016/07/12/vim_to_si/)  
+安裝 ctags, cscope, taglist, nerdtree, SrcExpl, trinity  
+.vim/ 裡面的東西  
+修改 .vimrc  
 [https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim](https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim)  
 中文說明文件：  
 [https://github.com/Chienweichih/vimcdoc](https://github.com/Chienweichih/vimcdoc)
