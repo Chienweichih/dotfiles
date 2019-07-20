@@ -13,10 +13,13 @@
     lib/DiffHighlight.pm  
     [https://github.com/so-fancy/diff-so-fancy/blob/master/lib/DiffHighlight.pm](https://github.com/so-fancy/diff-so-fancy/blob/master/lib/DiffHighlight.pm)
 
-3. 安裝 bc  
+3. 安裝 mupdf  
+    下載: [https://mupdf.com/downloads/index.html](https://mupdf.com/downloads/index.html)
+
+4. 安裝 bc  
     下載: [http://gnuwin32.sourceforge.net/packages/bc.htm](http://gnuwin32.sourceforge.net/packages/bc.htm)
 
-4. 安裝 KDiff3  
+5. 安裝 KDiff3  
     下載: [http://kdiff3.sourceforge.net/](http://kdiff3.sourceforge.net/)
 
 * * *

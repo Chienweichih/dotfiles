@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
-"       Amir Salihefendic ¡X @amix3k
+"       Amir Salihefendic â€” @amix3k
 "
 " Awesome_version:
 "       Get this config, nice color schemes and lots of plugins!
@@ -380,30 +380,3 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Chienweichih add
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Display line numbers
-set nu
-
-" Highlight current line
-set cursorline
-
-" Change font
-set guifont=Monaco:h10:b
-
-" ctags
-set tags=./tags,./TAGS,tags;~,TAGS;~
-
-" Open and close all the three plugins on the same time 
-nmap <F8>  :TrinityToggleAll<CR> 
-
-" Open and close the Source Explorer separately 
-nmap <F9>  :TrinityToggleSourceExplorer<CR> 
-
-" Open and close the Taglist separately 
-nmap <F10> :TrinityToggleTagList<CR> 
-
-" Open and close the NERD Tree separately 
-nmap <F11> :TrinityToggleNERDTree<CR> 
