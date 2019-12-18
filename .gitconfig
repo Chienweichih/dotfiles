@@ -1,17 +1,31 @@
 # This is Git's per-user configuration file.
 [user]
-    name = <name> 
-    email = <email> 
+	name = <name> 
+	email = <email> 
 [core]
-    pager = $HOME/diff-so-fancy | less --tabs=4 -RFX
-    autocrlf = true
-    excludesFile = ~/.gitignore
+	pager = ~/diff-so-fancy/diff-so-fancy | less --tabs=4 -RFX
+	autocrlf = true
+	excludesFile = ~/.gitignore
 [alias]
-    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)-%an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%C(dim white)- %an%C(reset)' --all
-    pt  = !git tag -l | xargs git tag -d && git fetch -t
-    gcn = !git reflog expire --all --expire=now && git gc --prune=now --aggressive
-[merge]
-    tool = vimdiff
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)-%an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%C(dim white)- %an%C(reset)' --all
+	pt  = !git tag -l | xargs git tag -d && git fetch -t
+	gcn = !git reflog expire --all --expire=now && git gc --prune=now --aggressive
 [diff]
-    tool = vimdiff
+	tool = vimdiff
+[merge]
+	tool = vimdiff
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse

@@ -1,8 +1,14 @@
+scriptencoding utf-8
+
 "
 " General
 "
-set history=200
+set history=5000
 set nocompatible
+set nojoinspaces
+if has('mouse')
+  set mouse=nv
+endif
 
 filetype plugin indent on
 
@@ -19,6 +25,9 @@ set hlsearch
 set incsearch
 set number
 set laststatus=2
+set showcmd
+set foldlevelstart=99
+set diffopt=filler,vertical
 
 
 "
@@ -49,7 +58,7 @@ let g:PaperColor_Theme_Options = {
   \   }
   \ }
 
-packadd papercolor
+packadd papercolor-theme
 
 set t_Co=256   " This is may or may not needed.
 
@@ -57,10 +66,11 @@ set background=dark
 colorscheme PaperColor
 
 set guifont=Courier_New:h12:b
-set ffs=unix,dos,mac
+set fileencodings=utf-8,cp950
+set fileformats=unix,dos,mac
 
-packadd syntax_highlighting_extras
-packadd python_syntax
+packadd vim-syntax-extra
+packadd python-syntax
 
 
 "
@@ -68,6 +78,7 @@ packadd python_syntax
 "
 set noundofile
 set nobackup
+set noswapfile
 
 
 "
@@ -84,14 +95,51 @@ set smartindent
 "
 " Editing mappings
 "
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
+
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+
+nnoremap & :&&<Enter>
+xnoremap & :&&<Enter>
+
+xnoremap . :normal .<CR>
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo '@'.getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+
+packadd vim-visual-star-search
+
+nnoremap <a-h> <c-w>h
+nnoremap <a-j> <c-w>j
+nnoremap <a-k> <c-w>k
+nnoremap <a-l> <c-w>l
+vnoremap <a-h> <c-\><c-n><c-w>h
+vnoremap <a-j> <c-\><c-n><c-w>j
+vnoremap <a-k> <c-\><c-n><c-w>k
+vnoremap <a-l> <c-\><c-n><c-w>l
+inoremap <a-h> <c-\><c-n><c-w>h
+inoremap <a-j> <c-\><c-n><c-w>j
+inoremap <a-k> <c-\><c-n><c-w>k
+inoremap <a-l> <c-\><c-n><c-w>l
+cnoremap <a-h> <c-\><c-n><c-w>h
+cnoremap <a-j> <c-\><c-n><c-w>j
+cnoremap <a-k> <c-\><c-n><c-w>k
+cnoremap <a-l> <c-\><c-n><c-w>l
 
 
 "
 " makes the % command work better
 "
 runtime macros/matchit.vim
+
+
+"
+" netrw.vim
+"
+let g:netrw_banner=0
 
 
 "
