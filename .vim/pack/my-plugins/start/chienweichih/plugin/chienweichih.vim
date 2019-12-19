@@ -167,3 +167,10 @@ let Gtags_No_Auto_Jump = 1
 
 packadd gtags
 
+
+"
+" Tim Pope plugins
+"
+packadd vim-abolish
+packadd vim-fugitive
+packadd vim-surround
