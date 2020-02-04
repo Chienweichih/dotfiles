@@ -4,6 +4,9 @@
 [submodule ".vim/pack/my-plugins/opt/papercolor-theme"]
 	path = .vim/pack/my-plugins/opt/papercolor-theme
 	url = https://github.com/NLKNguyen/papercolor-theme.git
+[submodule ".vim/pack/my-plugins/opt/lightline.vim"]
+	path = .vim/pack/my-plugins/opt/lightline.vim
+	url = https://github.com/itchyny/lightline.vim.git
 [submodule ".vim/pack/my-plugins/opt/vim-syntax-extra"]
 	path = .vim/pack/my-plugins/opt/vim-syntax-extra
 	url = https://github.com/justinmk/vim-syntax-extra.git

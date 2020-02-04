@@ -6,6 +6,10 @@ or use this command if you clone without --recursive:
 
     git submodule update --init --recursive
 
+Generate helptags for plugins (in Vim)
+
+    :helptags ALL
+
 # Vim #
 
 Reference [my-vim-setting][vim]

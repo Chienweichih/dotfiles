@@ -83,6 +83,19 @@ set t_Co=256   " This is may or may not needed.
 set background=dark
 colorscheme PaperColor
 
+let g:lightline = {
+      \ 'colorscheme': 'PaperColor',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
+packadd lightline.vim
+set noshowmode
+
 packadd vim-syntax-extra
 packadd python-syntax
 
