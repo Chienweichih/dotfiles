@@ -16,6 +16,7 @@ filetype plugin indent on
 "
 " options
 "
+set autoread
 set nocompatible
 set diffopt=filler,vertical
 set fileencodings=utf-8,cp950
