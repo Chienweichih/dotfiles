@@ -6,6 +6,15 @@ or use this command if you clone without --recursive:
 
     git submodule update --init --recursive
 
+Create symlinks:
+
+    ln -s ~/dotfiles/bashrc ~/.bashrc
+    ln -s ~/dotfiles/inputrc ~/.inputrc
+    ln -s ~/dotfiles/minttyrc ~/.minttyrc
+    ln -s ~/dotfiles/tigrc ~/.tigrc
+    ln -s ~/dotfiles/diff-so-fancy ~/diff-so-fancy
+    ln -s ~/dotfiles/vim ~/.vim
+
 Generate helptags for plugins (in Vim)
 
     :helptags ALL
@@ -18,10 +27,10 @@ Reference [my-vim-setting][vim]
 
 Download from [Git][git]
 
-    Modify   .minttyrc
     Modify   .gitconfig
-    Add      .tigrc
-    Add      diff-so-fancy
+    Link     .minttyrc
+    Link     .tigrc
+    Link     diff-so-fancy
 
 
 

@@ -187,9 +187,21 @@
 
   alias e='explorer .'
   alias t='ctags -R; gtags'
+  alias x='chmod -R 755 .'
+  alias rn='find . -type f -print0 | xargs -0 dos2unix'
   alias ptt='ssh bbsu@ptt.cc'
 
   parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
   }
-  export PS1="\[\033[38;5;6m\][\w]\[$(tput sgr0)\]\[\033[38;5;11m\]\$(parse_git_branch)\[$(tput sgr0)\]: \[$(tput sgr0)\]"
+  PS1='\[\e]0;\w\a\]'          # set window title
+  PS1="$PS1"'\n'               # new line
+  PS1="$PS1"'\[\e[32m\]'       # change to green
+  PS1="$PS1"'\u@\h '           # user@host<space>
+  PS1="$PS1"'\[\e[33m\]'       # change to brownish yellow
+  PS1="$PS1"'\w'               # current working directory
+  PS1="$PS1"'\[\e[36m\]'       # change to cyan
+  PS1="$PS1""\$(parse_git_branch)"
+  PS1="$PS1"'\n'               # new line
+  PS1="$PS1"'\[\e[0m\]'        # change to white
+  PS1="$PS1"'\$ '              # # or $<space>

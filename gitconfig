@@ -29,6 +29,9 @@
 #	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -mine "$(cygpath -w $REMOTE)" -base "$(cygpath -w $LOCAL)"
 #[mergetool "tortoisemerge"]
 #	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -base "$(cygpath -w $BASE)" -theirs "$(cygpath -w $REMOTE)" -mine "$(cygpath -w $LOCAL)" -merged "$(cygpath -w $MERGED)"
+# note: WinMerge setting
+# C:\Program Files (x86)\WinMerge\WinMergeU.exe -e -ub -dl %bname -dr %yname %base %mine
+# C:\Program Files (x86)\WinMerge\WinMergeU.exe /e /ub /fr /wl /wm /dl %bname /dm %tname /dr %yname  %base %theirs %mine /o %merged /ar
 [color]
 	ui = true
 [color "diff-highlight"]
