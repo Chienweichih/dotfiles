@@ -1,10 +1,7 @@
 Installation
 
-    git clone --recursive https://github.com/Chienweichih/dotfiles.git
-
-or use this command if you clone without --recursive:
-
-    git submodule update --init --recursive
+    git clone https://github.com/Chienweichih/dotfiles.git
+    git clone https://github.com/so-fancy/diff-so-fancy.git
 
 Create symlinks:
 
@@ -12,16 +9,21 @@ Create symlinks:
     ln -s ~/dotfiles/inputrc ~/.inputrc
     ln -s ~/dotfiles/minttyrc ~/.minttyrc
     ln -s ~/dotfiles/tigrc ~/.tigrc
-    ln -s ~/dotfiles/diff-so-fancy ~/diff-so-fancy
     ln -s ~/dotfiles/vim ~/.vim
-
-Generate helptags for plugins (in Vim)
-
-    :helptags ALL
 
 # Vim #
 
 Reference [my-vim-setting][vim]
+
+20200701 update:
+
+Managing Plugins with minpac
+
+    mkdir -p ~/dotfiles/vim/pack/minpac/opt
+    cd ~/dotfiles/vim/pack/minpac/opt
+    git clone https://github.com/k-takata/minpac.git
+
+    :PackUpdate
 
 # Git #
 
@@ -30,8 +32,6 @@ Download from [Git][git]
     Modify   .gitconfig
     Link     .minttyrc
     Link     .tigrc
-    Link     diff-so-fancy
-
 
 
 

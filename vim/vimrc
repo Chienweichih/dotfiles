@@ -77,8 +77,6 @@ let g:PaperColor_Theme_Options = {
   \   }
   \ }
 
-packadd papercolor-theme
-
 set t_Co=256   " This is may or may not needed.
 
 set background=dark
@@ -94,11 +92,7 @@ let g:lightline = {
       \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
-packadd lightline.vim
 set noshowmode
-
-packadd vim-syntax-extra
-packadd python-syntax
 
 
 "
@@ -137,8 +131,6 @@ function! ExecuteMacroOverVisualRange()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
-packadd vim-visual-star-search
-
 
 "
 " makes the % command work better
@@ -160,8 +152,6 @@ filetype on
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 
-packadd taglist
-
 set tags=./tags,./TAGS,tags;~,TAGS;~
 set updatetime=100
 
@@ -175,12 +165,24 @@ let Gtags_Auto_Map = 1
 let Gtags_Auto_Update = 1
 let Gtags_No_Auto_Jump = 1
 
-packadd gtags
+packadd global
 
 
 "
-" Tim Pope's plugins
+" minpac
 "
-packadd vim-abolish
-packadd vim-fugitive
-packadd vim-surround
+packadd minpac
+call minpac#init()
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('yegappan/taglist')
+call minpac#add('NLKNguyen/papercolor-theme')
+call minpac#add('itchyny/lightline.vim')
+call minpac#add('justinmk/vim-syntax-extra')
+call minpac#add('hdima/python-syntax')
+call minpac#add('nelstrom/vim-visual-star-search')
+call minpac#add('tpope/vim-abolish')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-surround')
+
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
