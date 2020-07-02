@@ -9,7 +9,7 @@ Create symlinks:
     ln -s ~/dotfiles/inputrc ~/.inputrc
     ln -s ~/dotfiles/minttyrc ~/.minttyrc
     ln -s ~/dotfiles/tigrc ~/.tigrc
-    ln -s ~/dotfiles/vim ~/.vim
+    ln -s ~/dotfiles/vimrc ~/.vimrc
 
 # Vim #
 
@@ -19,11 +19,19 @@ Reference [my-vim-setting][vim]
 
 Managing Plugins with minpac
 
-    mkdir -p ~/dotfiles/vim/pack/minpac/opt
-    cd ~/dotfiles/vim/pack/minpac/opt
+    mkdir -p ~/.vim/pack/minpac/opt
+    cd ~/.vim/pack/minpac/opt
     git clone https://github.com/k-takata/minpac.git
 
     :PackUpdate
+
+Installing fzf
+
+    ~/.vim/pack/minpac/start/fzf/install --bin
+
+    (there's an issue on cygwin, need to modify line 587 ($TERM !=# 'xterm'))
+
+Installing ripgrep: [BurntSushi/ripgrep][rg]
 
 # Git #
 
@@ -35,5 +43,6 @@ Download from [Git][git]
 
 
 
+[rg]:  <https://github.com/BurntSushi/ripgrep#installation>
 [vim]: <https://chienweichih.github.io/my-vim-setting/>
 [git]: <https://git-scm.com/>

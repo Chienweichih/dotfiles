@@ -159,13 +159,24 @@ nnoremap <silent> <F9> :TlistToggle<CR>
 
 
 "
-" GNU GLOBAL
+" vim-grepper
 "
-let Gtags_Auto_Map = 1
-let Gtags_Auto_Update = 1
-let Gtags_No_Auto_Jump = 1
+nnoremap <leader>g :Grepper<cr>
 
-packadd global
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
+
+let g:grepper       = {}
+let g:grepper.tools = ['rg', 'ag', 'ack', 'grep', 'findstr', 'pt', 'git']
+
+
+"
+" vim-mergetool
+"
+let g:mergetool_layout = 'mr'
+let g:mergetool_prefer_revision = 'local'
+
+nmap <leader>mt <plug>(MergetoolToggle)
 
 
 "
@@ -174,7 +185,10 @@ packadd global
 packadd minpac
 call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('junegunn/fzf')
 call minpac#add('yegappan/taglist')
+call minpac#add('mhinz/vim-grepper')
+call minpac#add('samoshkin/vim-mergetool')
 call minpac#add('NLKNguyen/papercolor-theme')
 call minpac#add('itchyny/lightline.vim')
 call minpac#add('justinmk/vim-syntax-extra')
@@ -183,6 +197,7 @@ call minpac#add('nelstrom/vim-visual-star-search')
 call minpac#add('tpope/vim-abolish')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-surround')
+call minpac#add('tpope/vim-unimpaired')
 
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()

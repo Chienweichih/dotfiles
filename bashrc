@@ -186,10 +186,13 @@
 # alias cd=cd_func
 
   alias e='explorer .'
-  alias t='ctags -R; gtags'
+  alias t='ctags -R'
   alias x='chmod -R 755 .'
-  alias rn='find . -type f -print0 | xargs -0 dos2unix'
+  alias rn='rg --files -0 | xargs -0 dos2unix'
   alias ptt='ssh bbsu@ptt.cc'
+
+  export PATH=$PATH:~/.vim/pack/minpac/start/fzf/bin
+  export FZF_DEFAULT_COMMAND='rg --files'
 
   parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
