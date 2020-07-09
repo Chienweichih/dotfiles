@@ -1,3 +1,4 @@
+" vim: nowrap fdm=marker
 scriptencoding utf-8
 
 
@@ -123,6 +124,15 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 nnoremap & :&&<Enter>
 xnoremap & :&&<Enter>
 
+function! Preserve(command)
+  let l:save = winsaveview()
+  execute a:command
+  call winrestview(l:save)
+endfunction
+
+command! TrimWhitespace call Preserve("%s/\\s\\+$//e")
+nmap _$ :TrimWhitespace<CR>
+
 xnoremap . :normal .<CR>
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
@@ -130,6 +140,8 @@ function! ExecuteMacroOverVisualRange()
   echo '@'.getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
+
+let mapleader = ','
 
 
 "
@@ -145,6 +157,12 @@ let g:netrw_banner=0
 
 
 "
+" fzf
+"
+nnoremap <leader>f :<C-u>FZF<CR>
+
+
+"
 " taglist
 "
 filetype on
@@ -155,7 +173,7 @@ let Tlist_Exit_OnlyWindow=1
 set tags=./tags,./TAGS,tags;~,TAGS;~
 set updatetime=100
 
-nnoremap <silent> <F9> :TlistToggle<CR>
+nnoremap <silent> <leader>t :TlistToggle<CR>
 
 
 "
@@ -168,6 +186,9 @@ xmap gs <plug>(GrepperOperator)
 
 let g:grepper       = {}
 let g:grepper.tools = ['rg', 'ag', 'ack', 'grep', 'findstr', 'pt', 'git']
+
+nmap <C-n> :cnext<CR>
+nmap <C-p> :cprev<CR>
 
 
 "
@@ -194,10 +215,7 @@ call minpac#add('itchyny/lightline.vim')
 call minpac#add('justinmk/vim-syntax-extra')
 call minpac#add('hdima/python-syntax')
 call minpac#add('nelstrom/vim-visual-star-search')
-call minpac#add('tpope/vim-abolish')
 call minpac#add('tpope/vim-fugitive')
-call minpac#add('tpope/vim-surround')
-call minpac#add('tpope/vim-unimpaired')
 
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()

@@ -13,25 +13,7 @@ Create symlinks:
 
 # Vim #
 
-Reference [my-vim-setting][vim]
-
-20200701 update:
-
-Managing Plugins with minpac
-
-    mkdir -p ~/.vim/pack/minpac/opt
-    cd ~/.vim/pack/minpac/opt
-    git clone https://github.com/k-takata/minpac.git
-
-    :PackUpdate
-
-Installing fzf
-
-    ~/.vim/pack/minpac/start/fzf/install --bin
-
-    (there's an issue on cygwin, need to modify line 587 ($TERM !=# 'xterm'))
-
-Installing ripgrep: [BurntSushi/ripgrep][rg]
+Reference [my-vim-setting-2][vim]
 
 # Git #
 
@@ -43,6 +25,5 @@ Download from [Git][git]
 
 
 
-[rg]:  <https://github.com/BurntSushi/ripgrep#installation>
-[vim]: <https://chienweichih.github.io/my-vim-setting/>
+[vim]: <https://chienweichih.github.io/my-vim-setting-2/>
 [git]: <https://git-scm.com/>
