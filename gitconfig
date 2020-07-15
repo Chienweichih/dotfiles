@@ -1,48 +1,22 @@
-# This is Git's per-user configuration file.
 [user]
-	name = <name> 
-	email = <email> 
+	name = <your_name> 
+	email = <your_email> 
+
 [core]
-	pager = ~/diff-so-fancy/diff-so-fancy | less --tabs=4 -RFX
-	autocrlf = true
-	excludesFile = ~/.gitignore
 	editor = vim
-[alias]
-	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)-%an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%C(dim white)- %an%C(reset)' --all
-	pt  = !git tag -l | xargs git tag -d && git fetch -t
-	gcn = !git reflog expire --all --expire=now && git gc --prune=now --aggressive
-[diff]
-	tool = vimdiff
-[merge]
-	tool = vim_mergetool
-	conflictStyle = diff3
-[mergetool "vim_mergetool"]
-	cmd = vim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
-	trustExitCode = true
-#[diff]
-#	tool = tortoisediff
-#[difftool]
-#	prompt = false
-#[merge]
-#	tool = tortoisemerge
-#[mergetool]
-#	prompt = false
-#	keepBackup = false
-#[difftool "tortoisediff"]
-#	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -mine "$(cygpath -w $REMOTE)" -base "$(cygpath -w $LOCAL)"
-#[mergetool "tortoisemerge"]
-#	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -base "$(cygpath -w $BASE)" -theirs "$(cygpath -w $REMOTE)" -mine "$(cygpath -w $LOCAL)" -merged "$(cygpath -w $MERGED)"
-# note: WinMerge setting
-# C:\Program Files (x86)\WinMerge\WinMergeU.exe -e -ub -dl %bname -dr %yname %base %mine
-# C:\Program Files (x86)\WinMerge\WinMergeU.exe /e /ub /fr /wl /wm /dl %bname /dm %tname /dr %yname  %base %theirs %mine /o %merged /ar
+	autocrlf = true
+	filemode = false
+	pager = ~/diff-so-fancy/diff-so-fancy | less --tabs=4 -RFX
+
 [color]
 	ui = true
+
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+
 [color "diff"]
 	meta = 11
 	frag = magenta bold
@@ -50,3 +24,49 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
+
+[tig]
+	main-view = line-number:yes,interval=5 id:yes date:default author:full commit-title:yes,graph,refs,overflow=no
+	reflog-view = line-number:yes,interval=5 id:yes date:no author:no commit-title:yes,refs,overflow=no
+	refs-view = line-number:yes id:no date:default author:full ref commit-title
+	stash-view = line-number:yes,interval=5 id:no date:default author:full commit-title
+	tree-view = line-number:yes,interval=5 mode author:full file-size date:default id:no file-name
+	tab-size = 4
+	line-graphics = utf-8
+
+[diff]
+	tool = vimdiff
+
+[merge]
+	tool = vim_mergetool
+	conflictStyle = diff3    # only for vim_mergetool
+
+[mergetool]
+	keepBackup = false
+
+[mergetool "vim_mergetool"]
+	cmd = vim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+
+[difftool "WinMergeU_diff"]
+	cmd = '/cygdrive/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)"
+
+[mergetool "WinMergeU_merge"]
+	cmd = '/cygdrive/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e -dl \"Local\" -dr \"Remote\" "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)" "$(cygpath -w $MERGED)"
+
+[difftool "TortoiseMerge_diff"]
+	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -mine "$(cygpath -w $REMOTE)" -base "$(cygpath -w $LOCAL)"
+
+[mergetool "TortoiseMerge_merge"]
+	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -base "$(cygpath -w $BASE)" -theirs "$(cygpath -w $REMOTE)" -mine "$(cygpath -w $LOCAL)" -merged "$(cygpath -w $MERGED)"
+
+[difftool "BComp_diff"]
+	cmd = '/cygdrive/c/Program Files (x86)/Beyond Compare 3/BComp.exe' "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)"
+
+[mergetool "BComp_merge"]
+	cmd = '/cygdrive/c/Program Files (x86)/Beyond Compare 3/BComp.exe' "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)" "$(cygpath -w $BASE)" "$(cygpath -w $MERGED)"
+
+[alias]
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)-%an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%C(dim white)- %an%C(reset)' --all
+	pt  = !git tag -l | xargs git tag -d && git fetch -t
+	gcn = !git reflog expire --all --expire=now && git gc --prune=now --aggressive
