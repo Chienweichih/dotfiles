@@ -1,10 +1,10 @@
 [user]
-	name = <your_name> 
-	email = <your_email> 
+	name = <your_name>
+	email = <your_email>
 
 [core]
 	editor = vim
-	autocrlf = true
+	autocrlf = true    # remove this line if not in Windows
 	filemode = false
 	pager = ~/diff-so-fancy/diff-so-fancy | less --tabs=4 -RFX
 
@@ -38,14 +38,10 @@
 	tool = vimdiff
 
 [merge]
-	tool = vim_mergetool
-	conflictStyle = diff3    # only for vim_mergetool
+	tool = vimdiff
 
 [mergetool]
 	keepBackup = false
-
-[mergetool "vim_mergetool"]
-	cmd = vim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
 
 [difftool "WinMergeU_diff"]
 	cmd = '/cygdrive/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)"
@@ -65,8 +61,3 @@
 [mergetool "BComp_merge"]
 	cmd = '/cygdrive/c/Program Files (x86)/Beyond Compare 3/BComp.exe' "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)" "$(cygpath -w $BASE)" "$(cygpath -w $MERGED)"
 
-[alias]
-	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)-%an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%C(dim white)- %an%C(reset)' --all
-	pt  = !git tag -l | xargs git tag -d && git fetch -t
-	gcn = !git reflog expire --all --expire=now && git gc --prune=now --aggressive

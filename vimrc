@@ -95,6 +95,11 @@ let g:lightline = {
       \ }
 set noshowmode
 
+"
+" arm-syntax-vim
+"
+au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+
 
 "
 " Files, backups and undo
@@ -151,12 +156,6 @@ runtime macros/matchit.vim
 
 
 "
-" netrw.vim
-"
-let g:netrw_banner=0
-
-
-"
 " fzf
 "
 nnoremap <leader>f :<C-u>FZF<CR>
@@ -181,23 +180,11 @@ nnoremap <silent> <leader>t :TlistToggle<CR>
 "
 nnoremap <leader>g :Grepper<cr>
 
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
-
 let g:grepper       = {}
 let g:grepper.tools = ['rg', 'ag', 'ack', 'grep', 'findstr', 'pt', 'git']
 
 nmap <C-n> :cnext<CR>
 nmap <C-p> :cprev<CR>
-
-
-"
-" vim-mergetool
-"
-let g:mergetool_layout = 'lbr,m'
-let g:mergetool_prefer_revision = 'local'
-
-nmap <leader>mt <plug>(MergetoolToggle)
 
 
 "
@@ -209,13 +196,13 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('junegunn/fzf')
 call minpac#add('yegappan/taglist')
 call minpac#add('mhinz/vim-grepper')
-call minpac#add('samoshkin/vim-mergetool')
 call minpac#add('NLKNguyen/papercolor-theme')
 call minpac#add('itchyny/lightline.vim')
 call minpac#add('justinmk/vim-syntax-extra')
-call minpac#add('hdima/python-syntax')
+call minpac#add('ARM9/arm-syntax-vim')
 call minpac#add('nelstrom/vim-visual-star-search')
 call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-vinegar')
 
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()
