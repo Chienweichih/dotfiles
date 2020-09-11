@@ -12,6 +12,12 @@ Create symlinks:
 
 Reference [my-vim-setting-2][vim]
 
+    cp .../ripgrep/target/release/rg ~/usr/bin
+    cp ~/.vim/pack/minpac/start/fzf/bin/fzf ~/usr/bin
+
+    # Install other programs uses Autotools:
+    ./configure --prefix=$HOME/usr && make && make install
+
 # Git #
 
 Download from [Git][git]

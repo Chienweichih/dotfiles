@@ -10,8 +10,7 @@ alias x='chmod -R 755 .'
 
 bind "set completion-ignore-case on"
 
-# TODO: use private root directory (21st Century C, page 23)
-export PATH=$PATH:~/.vim/pack/minpac/start/fzf/bin
+export PATH=~/usr/bin:$PATH
 export FZF_DEFAULT_COMMAND='rg --files'
 export LC_ALL=C.UTF-8
 
