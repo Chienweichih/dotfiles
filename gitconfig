@@ -8,6 +8,9 @@
 	filemode = false
 	pager = ~/diff-so-fancy/diff-so-fancy | less --tabs=4 -RFX
 
+[interactive]
+	diffFilter = ~/diff-so-fancy/diff-so-fancy --patch
+
 [color]
 	ui = true
 
@@ -20,28 +23,28 @@
 [color "diff"]
 	meta = 11
 	frag = magenta bold
+	func = 146 bold
 	commit = yellow bold
 	old = red bold
 	new = green bold
 	whitespace = red reverse
 
 [tig]
-	main-view = line-number:yes,interval=5 id:yes date:default author:full commit-title:yes,graph,refs,overflow=no
-	reflog-view = line-number:yes,interval=5 id:yes date:no author:no commit-title:yes,refs,overflow=no
-	refs-view = line-number:yes id:no date:default author:full ref commit-title
-	stash-view = line-number:yes,interval=5 id:no date:default author:full commit-title
-	tree-view = line-number:yes,interval=5 mode author:full file-size date:default id:no file-name
+	main-view-id = yes
+	main-view-line-number = yes
 	tab-size = 4
-	line-graphics = utf-8
 
 [diff]
 	tool = vimdiff
 
 [merge]
-	tool = vimdiff
+	tool = vim-conflicted
 
 [mergetool]
 	keepBackup = false
+
+[mergetool "vim-conflicted"]
+	cmd = vim +Conflicted
 
 [difftool "WinMergeU_diff"]
 	cmd = '/cygdrive/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)"

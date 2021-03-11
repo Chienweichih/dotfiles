@@ -1,5 +1,6 @@
-set number
-set nowrap
 set tabstop=4
-colorscheme murphy
+set nowrap
+set ignorecase
 syntax on
+colorscheme murphy
+set number
