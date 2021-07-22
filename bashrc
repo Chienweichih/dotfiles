@@ -1,16 +1,19 @@
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
-alias e='explorer .' # for Windows only
+if [[ "$(uname -s)" == "CYGWIN"* ]]; then
+    alias e='explorer .'
+    alias ranger='python ~/code/ranger/ranger.py'
+fi
+
 alias ls="ls --color=auto"
 alias ptt='ssh bbsu@ptt.cc'
 alias rn='rg --files -0 | xargs -0 dos2unix'
-alias t='ctags -R'
-alias x='chmod -R 755 .'
+alias t='ctags -RV | rg RECURSING'
 
 bind "set completion-ignore-case on"
 
-export PATH=~/usr/bin:$PATH
+export PATH=$PATH:~/usr/bin
 export FZF_DEFAULT_COMMAND='rg --files'
 export LC_ALL=C.UTF-8
 

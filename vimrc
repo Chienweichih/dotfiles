@@ -15,6 +15,36 @@ filetype plugin indent on
 
 
 "
+" map
+"
+cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
+
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+
+nnoremap & :&&<Enter>
+xnoremap & :&&<Enter>
+
+function! Preserve(command)
+  let l:save = winsaveview()
+  execute a:command
+  call winrestview(l:save)
+endfunction
+
+command! TrimWhitespace call Preserve("%s/\\s\\+$//e")
+nmap _$ :TrimWhitespace<CR>
+
+xnoremap . :normal .<CR>
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo '@'.getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+
+let mapleader = ','
+
+
+"
 " options
 "
 set autoread
@@ -41,6 +71,18 @@ set smartcase
 set wildmenu
 set wildmode=full
 
+" Files, backups and undo
+set noundofile
+set nobackup
+set noswapfile
+
+" Text, tab and indent related
+set tabstop=4 softtabstop=4 shiftwidth=4
+set autoindent
+set expandtab
+set smarttab
+set smartindent
+
 
 "
 " pattern
@@ -49,9 +91,11 @@ set ignorecase
 
 
 "
-" various
+" starting
 "
-set number
+if has('win32unix')
+  let $TERM = "cygwin"
+endif
 
 
 "
@@ -98,58 +142,14 @@ let g:lightline = {
       \ }
 set noshowmode
 
-"
 " arm-syntax-vim
-"
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
 
 "
-" Files, backups and undo
+" various
 "
-set noundofile
-set nobackup
-set noswapfile
-
-
-"
-" Text, tab and indent related
-"
-set tabstop=4 softtabstop=4 shiftwidth=4
-set autoindent
-set expandtab
-set smarttab
-set smartindent
-
-
-"
-" Editing mappings
-"
-cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
-
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
-
-nnoremap & :&&<Enter>
-xnoremap & :&&<Enter>
-
-function! Preserve(command)
-  let l:save = winsaveview()
-  execute a:command
-  call winrestview(l:save)
-endfunction
-
-command! TrimWhitespace call Preserve("%s/\\s\\+$//e")
-nmap _$ :TrimWhitespace<CR>
-
-xnoremap . :normal .<CR>
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-function! ExecuteMacroOverVisualRange()
-  echo '@'.getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-
-let mapleader = ','
+set number
 
 
 "
@@ -212,6 +212,7 @@ call minpac#add('itchyny/lightline.vim')
 call minpac#add('justinmk/vim-syntax-extra')
 call minpac#add('ARM9/arm-syntax-vim')
 call minpac#add('nelstrom/vim-visual-star-search')
+call minpac#add('junegunn/gv.vim')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')

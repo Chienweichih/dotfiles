@@ -1,12 +1,12 @@
 [user]
-	name = <your_name>
-	email = <your_email>
+	name =  # user.name
+	email = # user.email
 
 [core]
 	editor = vim
-	autocrlf = true    # remove this line if not in Windows
 	filemode = false
 	pager = ~/diff-so-fancy/diff-so-fancy | less --tabs=4 -RFX
+	# autocrlf = true    # enable this line in Windows
 
 [interactive]
 	diffFilter = ~/diff-so-fancy/diff-so-fancy --patch

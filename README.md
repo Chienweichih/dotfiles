@@ -17,12 +17,14 @@ Reference [my-vim-setting-2][vim]
 
     # Install other programs uses Autotools:
     ./configure --prefix=$HOME/usr && make && make install
+    # (cmake)
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/usr . && make all install
 
 # Git #
 
 Download from [Git][git]
 
-    cd ~
+    cd # $HOME
     cp dotfiles/gitconfig .gitconfig
     # Modify [user], [diff], [merge]
     # for ripgrep usage, gitignore should place at default path: ~/.config/git/ignore
