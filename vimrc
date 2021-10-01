@@ -70,6 +70,7 @@ set showcmd
 set smartcase
 set wildmenu
 set wildmode=full
+set nowrap
 
 " Files, backups and undo
 set noundofile
@@ -130,16 +131,7 @@ set t_Co=256   " This is may or may not needed.
 set background=dark
 colorscheme PaperColor
 
-let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-      \ }
+let g:airline_theme='papercolor'
 set noshowmode
 
 " arm-syntax-vim
@@ -208,9 +200,11 @@ call minpac#add('mhinz/vim-grepper')
 call minpac#add('mbbill/undotree')
 call minpac#add('christoomey/vim-conflicted')
 call minpac#add('NLKNguyen/papercolor-theme')
-call minpac#add('itchyny/lightline.vim')
+call minpac#add('vim-airline/vim-airline')
+call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('justinmk/vim-syntax-extra')
 call minpac#add('ARM9/arm-syntax-vim')
+call minpac#add('mracos/mermaid.vim')
 call minpac#add('nelstrom/vim-visual-star-search')
 call minpac#add('junegunn/gv.vim')
 call minpac#add('tpope/vim-fugitive')

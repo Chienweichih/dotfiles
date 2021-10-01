@@ -2,23 +2,23 @@
 [[ "$-" != *i* ]] && return
 
 if [[ "$(uname -s)" == "CYGWIN"* ]]; then
-    alias e='explorer .'
-    alias ranger='python ~/code/ranger/ranger.py'
+    alias e="explorer ."
+    alias ranger="python $HOME/code/ranger/ranger.py"
 fi
 
 alias ls="ls --color=auto"
-alias ptt='ssh bbsu@ptt.cc'
-alias rn='rg --files -0 | xargs -0 dos2unix'
-alias t='ctags -RV | rg RECURSING'
+alias ptt="ssh bbsu@ptt.cc"
+alias rn="rg --files -0 | xargs -0 dos2unix"
+alias t="ctags -RV | rg RECURSING"
 
 bind "set completion-ignore-case on"
 
-export PATH=$PATH:~/usr/bin
-export FZF_DEFAULT_COMMAND='rg --files'
+export PATH="$HOME/usr/bin:$PATH"
+export FZF_DEFAULT_COMMAND="rg --files"
 export LC_ALL=C.UTF-8
 
-source ~/git-completion.bash
-source ~/git-prompt.sh
+source $HOME/git-completion.bash
+source $HOME/git-prompt.sh
 
 PS1='\[\e]0;\w\a\]'          # set window title
 PS1="$PS1"'\n'               # new line
