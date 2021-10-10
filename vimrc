@@ -105,14 +105,6 @@ endif
 syntax enable
 
 let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default.dark': {
-  \       'override' : {
-  \         'color00' : ['#000000', '0'],
-  \         'linenumber_bg' : ['#000000', '0']
-  \       }
-  \     }
-  \   },
   \   'language': {
   \     'python': {
   \       'highlight_builtins' : 1
