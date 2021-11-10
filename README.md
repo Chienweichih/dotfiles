@@ -31,8 +31,11 @@ Download from [Git][git]
 
     git clone https://github.com/so-fancy/diff-so-fancy.git
 
+    mkdir .bash_completion.d
+    cd .bash_completion.d
     curl -L -O https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
     curl -L -O https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
+    curl -L -O https://raw.github.com/jonas/tig/master/contrib/tig-completion.bash
 
 
 

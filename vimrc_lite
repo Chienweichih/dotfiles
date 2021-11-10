@@ -1,6 +1,12 @@
+set hlsearch
 set tabstop=4
 set nowrap
+
+set noundofile
+set nobackup
+set noswapfile
+
 set ignorecase
 syntax on
-colorscheme murphy
+colorscheme murphy " use 'morning' for light theme
 set number

@@ -62,8 +62,7 @@ else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 
-source $HOME/git-completion.bash
-source $HOME/git-prompt.sh
+for f in $HOME/.bash_completion.d/*; do source $f; done
 
 if [ "$color_prompt" = yes ]; then
     PS1="$PS1\[\033[01;33m\]\$(__git_ps1 '(%s) ')\[\033[00m\]"
