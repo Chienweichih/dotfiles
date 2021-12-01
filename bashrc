@@ -121,14 +121,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [[ "$(uname -s)" == "CYGWIN"* ]]; then
+if [[ "$(uname -s)" == "MINGW"* ]]; then
     alias e="explorer ."
-    alias ranger="python $HOME/code/ranger/ranger.py"
-    alias rn="rg --files -0 | xargs -0 dos2unix"
+    alias fzf="winpty fzf.exe"
 fi
 
 alias ptt="ssh bbsu@ptt.cc"
-alias t="ctags -RV | rg RECURSING"
+alias t="rg --files | ctags --verbose=yes --recurse --links=no -L - | rg OPENING"
 
 bind "set completion-ignore-case on"
 

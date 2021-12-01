@@ -49,20 +49,12 @@
 	cmd = vim +Conflicted
 
 [difftool "WinMergeU_diff"]
-	cmd = '/cygdrive/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)"
+	cmd = '/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e $LOCAL $REMOTE
 
 [mergetool "WinMergeU_merge"]
-	cmd = '/cygdrive/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e -dl \"Local\" -dr \"Remote\" "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)" "$(cygpath -w $MERGED)"
+	cmd = '/c/Program Files (x86)/WinMerge/WinMergeU.exe' -u -e -dl \"Local\" -dr \"Remote\" $LOCAL $REMOTE $MERGED
 
-[difftool "TortoiseMerge_diff"]
-	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -mine "$(cygpath -w $REMOTE)" -base "$(cygpath -w $LOCAL)"
-
-[mergetool "TortoiseMerge_merge"]
-	cmd = '/cygdrive/c/Program Files/TortoiseSVN/bin/TortoiseMerge.exe' -base "$(cygpath -w $BASE)" -theirs "$(cygpath -w $REMOTE)" -mine "$(cygpath -w $LOCAL)" -merged "$(cygpath -w $MERGED)"
-
-[difftool "BComp_diff"]
-	cmd = '/cygdrive/c/Program Files (x86)/Beyond Compare 3/BComp.exe' "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)"
-
-[mergetool "BComp_merge"]
-	cmd = '/cygdrive/c/Program Files (x86)/Beyond Compare 3/BComp.exe' "$(cygpath -w $LOCAL)" "$(cygpath -w $REMOTE)" "$(cygpath -w $BASE)" "$(cygpath -w $MERGED)"
+# Enable this if you want to store password
+# [credential]
+#	helper = store
 

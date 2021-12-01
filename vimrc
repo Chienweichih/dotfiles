@@ -92,14 +92,6 @@ set ignorecase
 
 
 "
-" starting
-"
-if has('win32unix')
-  let $TERM = "cygwin"
-endif
-
-
-"
 " syntax
 "
 syntax enable
