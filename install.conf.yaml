@@ -1,0 +1,28 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.vimrc: vimrc
+    ~/.bashrc: bashrc
+    ~/.minttyrc:
+      if: '[[ "$(uname -s)" == "MINGW"* ]]'
+      path: minttyrc
+
+- create:
+    - ~/.bash_completion.d
+    - ~/.vim/pack/minpac/opt
+
+- shell:
+    - git submodule update --init --recursive
+    - curl -O https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
+    - mv git-completion.bash ~/.bash_completion.d/git-completion.bash
+    - curl -O https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
+    - mv git-prompt.sh ~/.bash_completion.d/git-prompt.sh
+    - curl -O https://raw.github.com/jonas/tig/master/contrib/tig-completion.bash
+    - mv tig-completion.bash ~/.bash_completion.d/tig-completion.bash
+    - git clone https://github.com/so-fancy/diff-so-fancy.git ~/diff-so-fancy
+    - git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
+    - vim +PackUpdate +qall
