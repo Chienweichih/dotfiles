@@ -10,14 +10,14 @@ esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignoredups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=10000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -120,14 +120,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-if [[ "$(uname -s)" == "MINGW"* ]]; then
-    alias e="explorer ."
-    alias fzf="winpty fzf.exe"
-fi
-
-alias ptt="ssh bbsu@ptt.cc"
-alias t="rg --files | ctags --verbose=yes --recurse --links=no -L - | rg OPENING"
 
 bind "set completion-ignore-case on"
 

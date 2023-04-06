@@ -7,8 +7,10 @@
 - link:
     ~/.vimrc: vimrc
     ~/.bashrc: bashrc
+    ~/.bash_profile: bash_profile
+    ~/.bash_aliases: bash_aliases
     ~/.minttyrc:
-      if: '[[ "$(uname -s)" == "MINGW"* ]]'
+      if: '[[ "$TERM_PROGRAM" == "mintty" ]]'
       path: minttyrc
 
 - create:
@@ -17,12 +19,10 @@
 
 - shell:
     - git submodule update --init --recursive
-    - curl -O https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
-    - mv git-completion.bash ~/.bash_completion.d/git-completion.bash
-    - curl -O https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
-    - mv git-prompt.sh ~/.bash_completion.d/git-prompt.sh
-    - curl -O https://raw.github.com/jonas/tig/master/contrib/tig-completion.bash
-    - mv tig-completion.bash ~/.bash_completion.d/tig-completion.bash
-    - git clone https://github.com/so-fancy/diff-so-fancy.git ~/diff-so-fancy
-    - git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
-    - vim +PackUpdate +qall
+    - (cd bash_completion.d &&
+      cat url_list | tr -d '\r' | xargs -n1 curl -O &&
+      ls -1 | grep -v url_list | xargs -I FILENAME mv FILENAME ~/.bash_completion.d/)
+    - DIR=~/diff-so-fancy &&
+      [ ! -d $DIR ] && git clone https://github.com/so-fancy/diff-so-fancy.git $DIR || true
+    - DIR=~/.vim/pack/minpac/opt/minpac &&
+      [ ! -d $DIR ] && git clone https://github.com/k-takata/minpac.git $DIR || true

@@ -29,6 +29,10 @@ Using [Dotbot][dotbot] to install dotfiles, or manual execute commands that writ
 
 ## Other setting
 
+Update Vim package
+
+    vim "+call minpac#update('', {'do': 'qall'})"
+
 Copy gitconfig to $HOME, and modify [user], [diff], [merge]
 
     cp dotfiles/gitconfig ~/.gitconfig
