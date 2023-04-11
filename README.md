@@ -31,7 +31,7 @@ Using [Dotbot][dotbot] to install dotfiles, or manual execute commands that writ
 
 Update Vim package
 
-    vim "+call minpac#update('', {'do': 'qall'})"
+    vim -c "PackUpdateQuit"
 
 Copy gitconfig to $HOME, and modify [user], [diff], [merge]
 

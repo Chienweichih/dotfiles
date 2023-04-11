@@ -175,26 +175,32 @@ nnoremap <leader>u :UndotreeToggle<CR>
 "
 " minpac
 "
-packadd minpac
-call minpac#init()
-call minpac#add('k-takata/minpac', {'type': 'opt'})
-call minpac#add('junegunn/fzf')
-call minpac#add('yegappan/taglist')
-call minpac#add('mhinz/vim-grepper')
-call minpac#add('mbbill/undotree')
-call minpac#add('christoomey/vim-conflicted')
-call minpac#add('NLKNguyen/papercolor-theme')
-call minpac#add('vim-airline/vim-airline')
-call minpac#add('vim-airline/vim-airline-themes')
-call minpac#add('justinmk/vim-syntax-extra')
-call minpac#add('ARM9/arm-syntax-vim')
-call minpac#add('mracos/mermaid.vim')
-call minpac#add('nelstrom/vim-visual-star-search')
-call minpac#add('junegunn/gv.vim')
-call minpac#add('tpope/vim-fugitive')
-call minpac#add('tpope/vim-surround')
-call minpac#add('tpope/vim-unimpaired')
-call minpac#add('tpope/vim-vinegar')
+function! PackInit() abort
+  packadd minpac
 
-command! PackUpdate call minpac#update()
-command! PackClean call minpac#clean()
+  call minpac#init()
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+  call minpac#add('junegunn/fzf')
+  call minpac#add('yegappan/taglist')
+  call minpac#add('mhinz/vim-grepper')
+  call minpac#add('mbbill/undotree')
+  call minpac#add('christoomey/vim-conflicted')
+  call minpac#add('NLKNguyen/papercolor-theme')
+  call minpac#add('vim-airline/vim-airline')
+  call minpac#add('vim-airline/vim-airline-themes')
+  call minpac#add('justinmk/vim-syntax-extra')
+  call minpac#add('ARM9/arm-syntax-vim')
+  call minpac#add('mracos/mermaid.vim')
+  call minpac#add('nelstrom/vim-visual-star-search')
+  call minpac#add('junegunn/gv.vim')
+  call minpac#add('tpope/vim-fugitive')
+  call minpac#add('tpope/vim-surround')
+  call minpac#add('tpope/vim-unimpaired')
+  call minpac#add('tpope/vim-vinegar')
+endfunction
+
+command! PackUpdate call PackInit() | call minpac#update()
+command! PackClean  call PackInit() | call minpac#clean()
+command! PackStatus packadd minpac | call minpac#status()
+command! PackUpdateQuit call PackInit() | call minpac#update('', {'do': 'qall'})
