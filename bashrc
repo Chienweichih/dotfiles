@@ -123,6 +123,6 @@ fi
 
 bind "set completion-ignore-case on"
 
-export PATH="$HOME/usr/bin:$PATH"
+export PATH="$HOME/usr/bin:$HOME/.local/bin:$PATH"
 export FZF_DEFAULT_COMMAND="rg --files"
 export LC_ALL=C.UTF-8

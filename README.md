@@ -54,6 +54,10 @@ Install program using CMake:
     cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/usr .
     make all install
 
+Create symlinks:
+
+    ln -s /mnt/chromeos/MyFiles/ ~/MyFiles
+
 
 
 [git]: <https://git-scm.com/download/>
