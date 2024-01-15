@@ -48,10 +48,12 @@ let mapleader = ','
 " options
 "
 set autoread
-set nocompatible
+if &compatible
+  set nocompatible
+endif
 if &diff
   set diffopt=filler,vertical,context:1000000
-  set noro
+  set noreadonly
 endif
 set fileencodings=utf-8,cp950
 set fileformats=unix,dos,mac
@@ -192,7 +194,7 @@ function! PackInit() abort
   call minpac#add('justinmk/vim-syntax-extra')
   call minpac#add('ARM9/arm-syntax-vim')
   call minpac#add('mracos/mermaid.vim')
-  call minpac#add('nelstrom/vim-visual-star-search')
+  call minpac#add('bronson/vim-visual-star-search')
   call minpac#add('junegunn/gv.vim')
   call minpac#add('tpope/vim-fugitive')
   call minpac#add('tpope/vim-surround')

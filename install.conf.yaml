@@ -20,7 +20,7 @@
 - shell:
     - git submodule update --init --recursive
     - (cd bash_completion.d &&
-      cat url_list | tr -d '\r' | xargs -n1 curl -O &&
+      cat url_list | tr -d '\r' | xargs -n1 curl -LJO &&
       ls -1 | grep -v url_list | xargs -I FILENAME mv FILENAME ~/.bash_completion.d/)
     - DIR=~/diff-so-fancy &&
       [ ! -d $DIR ] && git clone https://github.com/so-fancy/diff-so-fancy.git $DIR || true

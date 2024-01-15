@@ -9,7 +9,7 @@ Download and install these tools:
 * [fzf][fzf]
 * [ripgrep][rg]
 
-_For Windows only:_
+## _For Windows only:_
 
 to create the symbolic links, run this command in Git Bash as an administrator:
 
@@ -18,6 +18,10 @@ to create the symbolic links, run this command in Git Bash as an administrator:
 [to set Environment Variables for fzf][fzf-wiki]:
 
     FZF_DEFAULT_COMMAND
+
+[Git Bash issue][fzf-issue]:
+
+    Modify fzf.vim: from "cmd.exe /C" to "cmd.exe //C"
 
 ## Deployment
 
@@ -65,4 +69,5 @@ Create symlinks:
 [fzf]: <https://github.com/junegunn/fzf/releases>
 [rg]: <https://github.com/BurntSushi/ripgrep/releases>
 [fzf-wiki]: <https://github.com/junegunn/fzf/wiki/Windows>
+[fzf-issue]: <https://github.com/junegunn/fzf/issues/1983>
 [dotbot]: <https://github.com/anishathalye/dotbot>
