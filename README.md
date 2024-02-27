@@ -5,23 +5,10 @@
 Download and install these tools:
 
 * [Git][git]
+* [Oh My Zsh][oh-my-zsh]
 * [Exuberant Ctags][ctags]
 * [fzf][fzf]
 * [ripgrep][rg]
-
-## _For Windows only:_
-
-to create the symbolic links, run this command in Git Bash as an administrator:
-
-    export MSYS=winsymlinks:nativestrict
-
-[to set Environment Variables for fzf][fzf-wiki]:
-
-    FZF_DEFAULT_COMMAND
-
-[Git Bash issue][fzf-issue]:
-
-    Modify fzf.vim: from "cmd.exe /C" to "cmd.exe //C"
 
 ## Deployment
 
@@ -65,9 +52,8 @@ Create symlinks:
 
 
 [git]: <https://git-scm.com/download/>
+[oh-my-zsh]: <https://ohmyz.sh/>
 [ctags]: <https://sourceforge.net/projects/ctags/files/>
 [fzf]: <https://github.com/junegunn/fzf/releases>
 [rg]: <https://github.com/BurntSushi/ripgrep/releases>
-[fzf-wiki]: <https://github.com/junegunn/fzf/wiki/Windows>
-[fzf-issue]: <https://github.com/junegunn/fzf/issues/1983>
 [dotbot]: <https://github.com/anishathalye/dotbot>

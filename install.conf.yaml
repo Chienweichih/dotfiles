@@ -6,22 +6,13 @@
 
 - link:
     ~/.vimrc: vimrc
-    ~/.bashrc: bashrc
-    ~/.bash_profile: bash_profile
-    ~/.bash_aliases: bash_aliases
-    ~/.minttyrc:
-      if: '[[ "$TERM_PROGRAM" == "mintty" ]]'
-      path: minttyrc
+    $ZSH/custom/bruce.zsh: zshrc
 
 - create:
-    - ~/.bash_completion.d
     - ~/.vim/pack/minpac/opt
 
 - shell:
     - git submodule update --init --recursive
-    - (cd bash_completion.d &&
-      cat url_list | tr -d '\r' | xargs -n1 curl -LJO &&
-      ls -1 | grep -v url_list | xargs -I FILENAME mv FILENAME ~/.bash_completion.d/)
     - DIR=~/diff-so-fancy &&
       [ ! -d $DIR ] && git clone https://github.com/so-fancy/diff-so-fancy.git $DIR || true
     - DIR=~/.vim/pack/minpac/opt/minpac &&
