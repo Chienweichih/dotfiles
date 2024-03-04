@@ -45,6 +45,24 @@ let mapleader = ','
 
 
 "
+" yank to system clipboard
+"
+if has('mac')
+  let s:clip = 'pbcopy'
+elseif system('uname -r') =~? "microsoft"
+  let s:clip = 'clip.exe'
+else
+  let s:clip = 'xclip -selection clipboard'
+endif
+if executable(s:clip)
+  augroup YankClipboard
+    autocmd!
+    autocmd TextYankPost * call system(s:clip, join(v:event.regcontents, "\<CR>"))
+  augroup END
+end
+
+
+"
 " options
 "
 set autoread
@@ -58,7 +76,13 @@ endif
 set fileencodings=utf-8,cp950
 set fileformats=unix,dos,mac
 set foldlevelstart=99
-set guifont=Courier_New:h12:b
+if has("gui_running")
+  if has('mac')
+    set guifont=Monaco:h14:b
+  else
+    set guifont=Courier_New:h14:b
+  endif
+endif
 set hidden
 set hlsearch
 set incsearch
@@ -99,6 +123,11 @@ set ignorecase
 syntax enable
 
 let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 1
+  \     }
+  \   },
   \   'language': {
   \     'python': {
   \       'highlight_builtins' : 1
@@ -150,7 +179,7 @@ filetype on
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 
-set tags=./tags,./TAGS,tags;~,TAGS;~
+set tags=./tags,tags
 set updatetime=100
 
 nnoremap <silent> <leader>t :TlistToggle<CR>
@@ -184,7 +213,7 @@ function! PackInit() abort
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
   call minpac#add('junegunn/fzf')
-  call minpac#add('yegappan/taglist')
+  call minpac#add('yegappan/taglist', {'rev': 'v4.6'})
   call minpac#add('mhinz/vim-grepper')
   call minpac#add('mbbill/undotree')
   call minpac#add('christoomey/vim-conflicted')
