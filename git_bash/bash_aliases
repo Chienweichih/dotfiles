@@ -1,0 +1,5 @@
+alias open="explorer"
+alias pbcopy="clip"
+alias t="rg --files | ctags --verbose=yes --recurse --links=no -L - | rg OPENING"
+alias coan_d="coan defs --recurse --filter c,h --keepgoing --locate . > defs"
+alias coan_s="coan source --file argfile --recurse --filter c,h --keepgoing ."
