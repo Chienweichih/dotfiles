@@ -9,12 +9,13 @@ Download and install these tools:
 * [Exuberant Ctags][ctags]
 * [fzf][fzf]
 * [ripgrep][rg]
+* [coan][coan]
 
 ## Deployment
 
 Clone this repository:
 
-    git clone https://github.com/Chienweichih/dotfiles.git
+    git clone --recurse-submodules https://github.com/Chienweichih/dotfiles.git
 
 Using [Dotbot][dotbot] to install dotfiles, or manual execute commands that write in install.conf.yaml
 
@@ -24,13 +25,28 @@ Update Vim package
 
     vim -c "PackUpdateQuit"
 
-Copy gitconfig to $HOME, and modify [user], [diff], [merge]
+Copy git config and modify [user], [diff], [merge]
 
-    cp dotfiles/gitconfig ~/.gitconfig
+    cd ~/dotfiles
+    cp git/config ~/.config/git/config
+    cp git/ignore ~/.config/git/ignore
 
-For ripgrep usage, gitignore should place at default path:
+## Git Bash
 
-    ~/.config/git/ignore
+Copy bash dotfiles
+
+    cd ~/dotfiles
+    cp git_bash/bash_aliases ~/.bash_aliases
+    cp git_bash/bash_profile ~/.bash_profile
+    cp git_bash/bashrc ~/.bashrc
+    cp git_bash/minttyrc ~/.minttyrc
+
+Download completion files
+
+    cd ~/.bash_completion.d
+    curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+    curl -LJO https://raw.githubusercontent.com/jonas/tig/master/contrib/tig-completion.bash
 
 ## Appendix
 
@@ -56,4 +72,5 @@ Create symlinks:
 [ctags]: <https://sourceforge.net/projects/ctags/files/>
 [fzf]: <https://github.com/junegunn/fzf/releases>
 [rg]: <https://github.com/BurntSushi/ripgrep/releases>
+[coan]: <https://coan2.sourceforge.net/index.php?page=install>
 [dotbot]: <https://github.com/anishathalye/dotbot>

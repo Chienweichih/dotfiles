@@ -7,5 +7,6 @@ if command -v explorer.exe > /dev/null; then
 elif command -v xclip > /dev/null; then
   alias pbcopy="xclip -selection clipboard"
 fi
-alias ptt="ssh bbsu@ptt.cc"
 alias t="rg --files | ctags --verbose=yes --recurse --links=no -L - | rg OPENING"
+alias coan_d="coan defs --recurse --filter c,h --keepgoing --locate . > defs"
+alias coan_s="coan source --file argfile --recurse --filter c,h --keepgoing ."
