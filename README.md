@@ -24,13 +24,28 @@ Update Vim package
 
     vim -c "PackUpdateQuit"
 
-Copy gitconfig to $HOME, and modify [user], [diff], [merge]
+Copy git config and modify [user], [diff], [merge]
 
-    cp dotfiles/gitconfig ~/.gitconfig
+    cd ~/dotfiles
+    cp git/config ~/.config/git/config
+    cp git/ignore ~/.config/git/ignore
 
-For ripgrep usage, gitignore should place at default path:
+## Git Bash
 
-    ~/.config/git/ignore
+Copy bash dotfiles
+
+    cd ~/dotfiles
+    cp git_bash/bash_aliases ~/.bash_aliases
+    cp git_bash/bash_profile ~/.bash_profile
+    cp git_bash/bashrc ~/.bashrc
+    cp git_bash/minttyrc ~/.minttyrc
+
+Download completion files
+
+    cd ~/.bash_completion.d
+    curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+    curl -LJO https://raw.githubusercontent.com/jonas/tig/master/contrib/tig-completion.bash
 
 ## Appendix
 
