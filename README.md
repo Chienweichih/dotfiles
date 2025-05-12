@@ -36,10 +36,9 @@ Copy git config and modify [user], [diff], [merge]
 Copy bash dotfiles
 
     cd ~/dotfiles
-    cp git_bash/bash_aliases ~/.bash_aliases
-    cp git_bash/bash_profile ~/.bash_profile
-    cp git_bash/bashrc ~/.bashrc
-    cp git_bash/minttyrc ~/.minttyrc
+    cp bash/bash_profile ~/.bash_profile
+    cp bash/bashrc ~/.bashrc
+    cp color/minttyrc ~/.config/mintty/config
 
 Download completion files
 
@@ -64,6 +63,7 @@ Install program using CMake:
 Create symlinks:
 
     ln -s /mnt/chromeos/MyFiles/ ~/MyFiles
+    ln -s /mnt/c/Users/_name_/Desktop ~/Desktop
 
 
 

@@ -9,10 +9,19 @@
     $ZSH/custom/bruce.zsh: zshrc
 
 - create:
+    - ~/.local/bin
     - ~/.vim/pack/minpac/opt
 
 - shell:
     - git submodule update --init --recursive
+    - install -m 755 script/coan-defs ~/.local/bin/coan-defs
+    - install -m 755 script/coan-source ~/.local/bin/coan-source
+    - install -m 755 script/ptime ~/.local/bin/ptime
+    - install -m 755 script/t ~/.local/bin/t
+    - grep -qi microsoft /proc/version &&
+      install -m 755 script/open ~/.local/bin/open || true
+    - grep -qi microsoft /proc/version &&
+      install -m 755 script/winmerge ~/.local/bin/winmerge || true
     - DIR=~/diff-so-fancy &&
       [ ! -d $DIR ] && git clone https://github.com/so-fancy/diff-so-fancy.git $DIR || true
     - DIR=~/.vim/pack/minpac/opt/minpac &&

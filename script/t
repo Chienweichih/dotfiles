@@ -1,0 +1,7 @@
+#!/bin/bash
+
+KEYWORD="${1:-OPENING}"
+
+rg --files | \
+ctags --verbose=yes --recurse --links=no -L - | \
+rg "$KEYWORD"

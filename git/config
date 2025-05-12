@@ -49,10 +49,10 @@
 	cmd = vim +Conflicted
 
 [difftool "WinMergeU_diff"]
-	cmd = '/mnt/c/Program Files/WinMerge/WinMergeU.exe' -u -e $(wslpath -w $LOCAL) $(wslpath -w $REMOTE)
+	cmd = winmerge $LOCAL $REMOTE
 
 [mergetool "WinMergeU_merge"]
-	cmd = '/mnt/c/Program Files/WinMerge/WinMergeU.exe' -u -e -dl \"Local\" -dr \"Remote\" $(wslpath -w $LOCAL) $(wslpath -w $REMOTE) $(wslpath -w $MERGED)
+	cmd = winmerge $LOCAL $REMOTE $MERGED
 
 # Enable this if you want to store password
 # [credential]
