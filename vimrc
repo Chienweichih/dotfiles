@@ -76,13 +76,6 @@ endif
 set fileencodings=utf-8,cp950
 set fileformats=unix,dos,mac
 set foldlevelstart=99
-if has("gui_running")
-  if has('mac')
-    set guifont=Monaco:h14:b
-  else
-    set guifont=Courier_New:h14:b
-  endif
-endif
 set hidden
 set hlsearch
 set incsearch
@@ -92,6 +85,7 @@ if has('mouse')
   set mouse=nv
 endif
 set ruler
+set shortmess-=S
 set showcmd
 set smartcase
 set wildmenu
@@ -122,31 +116,19 @@ set ignorecase
 "
 syntax enable
 
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default': {
-  \       'transparent_background': 1
-  \     }
-  \   },
-  \   'language': {
-  \     'python': {
-  \       'highlight_builtins' : 1
-  \     },
-  \     'cpp': {
-  \       'highlight_standard_library': 1
-  \     },
-  \     'c': {
-  \       'highlight_builtins' : 1
-  \     }
-  \   }
-  \ }
+colorscheme hemisu
+set background=light
 
-set t_Co=256   " This is may or may not needed.
-
-set background=dark
-colorscheme PaperColor
-
-let g:airline_theme='papercolor'
+let g:lightline = {
+      \ 'colorscheme': 'ayu_light',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 set noshowmode
 
 " arm-syntax-vim
@@ -213,13 +195,11 @@ function! PackInit() abort
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
   call minpac#add('junegunn/fzf')
-  call minpac#add('yegappan/taglist', {'rev': 'v4.6'})
+  call minpac#add('yegappan/taglist')
   call minpac#add('mhinz/vim-grepper')
-  call minpac#add('mbbill/undotree')
   call minpac#add('christoomey/vim-conflicted')
-  call minpac#add('NLKNguyen/papercolor-theme')
-  call minpac#add('vim-airline/vim-airline')
-  call minpac#add('vim-airline/vim-airline-themes')
+  call minpac#add('noahfrederick/vim-hemisu')
+  call minpac#add('itchyny/lightline.vim')
   call minpac#add('justinmk/vim-syntax-extra')
   call minpac#add('ARM9/arm-syntax-vim')
   call minpac#add('mracos/mermaid.vim')

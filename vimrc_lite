@@ -8,5 +8,5 @@ set noswapfile
 
 set ignorecase
 syntax on
-colorscheme murphy " use 'morning' for light theme
+colorscheme morning " use 'murphy' for dark theme
 set number
