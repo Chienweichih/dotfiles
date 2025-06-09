@@ -1,0 +1,27 @@
+BoldAsFont=yes
+CursorType=block
+Font=Cascadia Mono
+FontHeight=12
+Term=xterm-256color
+
+BackgroundColour=#FFFFFF
+Black=#000000
+Blue=#0000AA
+BoldBlack=#000000
+BoldBlue=#0000AA
+BoldCyan=#00AAAA
+BoldGreen=#00AA00
+BoldMagenta=#AA00AA
+BoldRed=#AA0000
+BoldWhite=#AAAAAA
+BoldYellow=#AA5500
+CursorColour=#000000
+Cyan=#00AAAA
+ForegroundColour=#000000
+Green=#00AA00
+Magenta=#AA00AA
+Red=#AA0000
+White=#AAAAAA
+Yellow=#AA5500
+
+Scrollbar=none
