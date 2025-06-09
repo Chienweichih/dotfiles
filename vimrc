@@ -76,13 +76,6 @@ endif
 set fileencodings=utf-8,cp950
 set fileformats=unix,dos,mac
 set foldlevelstart=99
-if has("gui_running")
-  if has('mac')
-    set guifont=Monaco:h14:b
-  else
-    set guifont=Courier_New:h14:b
-  endif
-endif
 set hidden
 set hlsearch
 set incsearch
@@ -92,6 +85,7 @@ if has('mouse')
   set mouse=nv
 endif
 set ruler
+set shortmess-=S
 set showcmd
 set smartcase
 set wildmenu
@@ -122,35 +116,33 @@ set ignorecase
 "
 syntax enable
 
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default': {
-  \       'transparent_background': 1
-  \     }
-  \   },
-  \   'language': {
-  \     'python': {
-  \       'highlight_builtins' : 1
-  \     },
-  \     'cpp': {
-  \       'highlight_standard_library': 1
-  \     },
-  \     'c': {
-  \       'highlight_builtins' : 1
-  \     }
-  \   }
-  \ }
+if &t_Co == 256
+    highlight LineNr     ctermfg=145    guifg=Gray
+    highlight Search     ctermbg=227    guibg=Yellow
+    highlight DiffAdd                   ctermfg=black cterm=bold guibg=green      guifg=black
+    highlight DiffText   ctermbg=yellow ctermfg=red   cterm=bold guibg=yellow     guifg=red
+    highlight DiffChange ctermbg=none   ctermfg=none  cterm=bold guibg=white      guifg=black
+    highlight DiffDelete                                         guibg=lightblue  guifg=lightblue
+endif
+set background=light
 
-set t_Co=256   " This is may or may not needed.
-
-set background=dark
-colorscheme PaperColor
-
-let g:airline_theme='papercolor'
+let g:lightline = {
+      \ 'colorscheme': 'ayu_light',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 set noshowmode
 
 " arm-syntax-vim
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+
+" python-syntax
+let g:python_highlight_all = 1
 
 
 "
@@ -215,14 +207,12 @@ function! PackInit() abort
   call minpac#add('junegunn/fzf')
   call minpac#add('yegappan/taglist', {'rev': 'v4.6'})
   call minpac#add('mhinz/vim-grepper')
-  call minpac#add('mbbill/undotree')
   call minpac#add('christoomey/vim-conflicted')
-  call minpac#add('NLKNguyen/papercolor-theme')
-  call minpac#add('vim-airline/vim-airline')
-  call minpac#add('vim-airline/vim-airline-themes')
+  call minpac#add('itchyny/lightline.vim')
   call minpac#add('justinmk/vim-syntax-extra')
   call minpac#add('ARM9/arm-syntax-vim')
-  call minpac#add('mracos/mermaid.vim')
+  call minpac#add('bfrg/vim-c-cpp-modern')
+  call minpac#add('vim-python/python-syntax')
   call minpac#add('bronson/vim-visual-star-search')
   call minpac#add('junegunn/gv.vim')
   call minpac#add('tpope/vim-fugitive')
