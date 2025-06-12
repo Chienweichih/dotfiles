@@ -1,10 +1,13 @@
 - defaults:
     link:
+      create: true
       relink: true
 
 - clean: ['~']
 
 - link:
+    ~/.config/git/ignore: git/ignore
+    ~/.config/tmux/tmux.conf: tmux.conf
     ~/.vimrc: vimrc
     $ZSH/custom/bruce.zsh: zshrc
 

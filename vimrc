@@ -19,8 +19,6 @@ filetype plugin indent on
 "
 cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
 
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
-
 nnoremap & :&&<Enter>
 xnoremap & :&&<Enter>
 
@@ -184,9 +182,9 @@ nmap <C-p> :cprev<CR>
 
 
 "
-" undotree
+" nohlsearch
 "
-nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <silent> <leader>l :<C-u>nohlsearch<CR>
 
 
 "
@@ -213,6 +211,7 @@ function! PackInit() abort
   call minpac#add('tpope/vim-surround')
   call minpac#add('tpope/vim-unimpaired')
   call minpac#add('tpope/vim-vinegar')
+  call minpac#add('christoomey/vim-tmux-navigator')
 endfunction
 
 command! PackUpdate call PackInit() | call minpac#update()
