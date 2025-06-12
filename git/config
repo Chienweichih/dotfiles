@@ -5,11 +5,11 @@
 [core]
 	editor = vim
 	filemode = false
-	pager = ~/diff-so-fancy/diff-so-fancy | less --tabs=4 -RFX
+	pager = diff-so-fancy | less --tabs=4 -RXS --pattern '^(Date|modified|added|deleted|renamed): '
 	# autocrlf = true    # enable this line in Windows
 
 [interactive]
-	diffFilter = ~/diff-so-fancy/diff-so-fancy --patch
+	diffFilter = diff-so-fancy --patch
 
 [color]
 	ui = true

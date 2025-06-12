@@ -9,6 +9,7 @@ Download and install these tools:
 * [Exuberant Ctags][ctags]
 * [fzf][fzf]
 * [ripgrep][rg]
+* [tmux][tmux]
 * [coan][coan]
 
 ## Deployment
@@ -27,15 +28,12 @@ Update Vim package
 
 Copy git config and modify [user], [diff], [merge]
 
-    cd ~/dotfiles
     cp git/config ~/.config/git/config
-    cp git/ignore ~/.config/git/ignore
 
 ## Git Bash
 
 Copy bash dotfiles
 
-    cd ~/dotfiles
     cp bash/bash_profile ~/.bash_profile
     cp bash/bashrc ~/.bashrc
     cp color/minttyrc ~/.config/mintty/config
@@ -51,13 +49,13 @@ Download completion files
 
 Install program using Autotools:
 
-    ./configure --prefix=$HOME/usr
+    ./configure --prefix=$HOME/.local
     make
     make install
 
 Install program using CMake:
 
-    cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/usr .
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/.local .
     make all install
 
 Create symlinks:
@@ -67,10 +65,11 @@ Create symlinks:
 
 
 
-[git]: <https://git-scm.com/download/>
+[git]: <https://git-scm.com/downloads/>
 [oh-my-zsh]: <https://ohmyz.sh/>
 [ctags]: <https://sourceforge.net/projects/ctags/files/>
 [fzf]: <https://github.com/junegunn/fzf/releases>
 [rg]: <https://github.com/BurntSushi/ripgrep/releases>
+[tmux]: <https://github.com/tmux/tmux>
 [coan]: <https://coan2.sourceforge.net/index.php?page=install>
 [dotbot]: <https://github.com/anishathalye/dotbot>
