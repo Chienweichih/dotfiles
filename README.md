@@ -9,8 +9,11 @@ Download and install these tools:
 * [Exuberant Ctags][ctags]
 * [fzf][fzf]
 * [ripgrep][rg]
+* [delta][delta]
 * [tmux][tmux]
 * [coan][coan]
+* [Programmer calculator][pcalc]
+* [win32yank][win32yank]
 
 ## Deployment
 
@@ -70,6 +73,9 @@ Create symlinks:
 [ctags]: <https://sourceforge.net/projects/ctags/files/>
 [fzf]: <https://github.com/junegunn/fzf/releases>
 [rg]: <https://github.com/BurntSushi/ripgrep/releases>
-[tmux]: <https://github.com/tmux/tmux>
+[delta]: <https://github.com/dandavison/delta/releases>
+[tmux]: <https://github.com/tmux/tmux/releases>
 [coan]: <https://coan2.sourceforge.net/index.php?page=install>
+[pcalc]: <https://github.com/alt-romes/programmer-calculator>
+[win32yank]: <https://github.com/equalsraf/win32yank/releases>
 [dotbot]: <https://github.com/anishathalye/dotbot>

@@ -45,19 +45,24 @@ let mapleader = ','
 "
 " yank to system clipboard
 "
-if has('mac')
+if executable('win32yank.exe')
+  let s:clip = 'win32yank.exe -i --crlf'
+elseif executable('wl-copy')
+  let s:clip = 'wl-copy'
+elseif executable('xclip')
+  let s:clip = 'xclip -selection clipboard -in'
+elseif executable('pbcopy')
   let s:clip = 'pbcopy'
-elseif system('uname -r') =~? "microsoft"
-  let s:clip = 'clip.exe'
-else
-  let s:clip = 'xclip -selection clipboard'
 endif
-if executable(s:clip)
+if exists('s:clip')
   augroup YankClipboard
     autocmd!
-    autocmd TextYankPost * call system(s:clip, join(v:event.regcontents, "\<CR>"))
+    autocmd TextYankPost * call system(s:clip, join(v:event.regcontents, "\n"))
   augroup END
-end
+endif
+function! ClipboardTool()
+  return exists('s:clip') ? '[' . matchstr(s:clip, '^[^ ]*') . ']' : ''
+endfunction
 
 
 "
@@ -115,24 +120,56 @@ set ignorecase
 syntax enable
 
 if &t_Co == 256
-    highlight LineNr     ctermfg=145    guifg=Gray
-    highlight Search     ctermbg=227    guibg=Yellow
-    highlight DiffAdd                   ctermfg=black cterm=bold guibg=green      guifg=black
-    highlight DiffText   ctermbg=yellow ctermfg=red   cterm=bold guibg=yellow     guifg=red
-    highlight DiffChange ctermbg=none   ctermfg=none  cterm=bold guibg=white      guifg=black
-    highlight DiffDelete                                         guibg=lightblue  guifg=lightblue
+  highlight LineNr     ctermfg=145    guifg=Gray
+  highlight Search     ctermbg=227    guibg=Yellow
+  highlight DiffAdd                   ctermfg=black cterm=bold guibg=green      guifg=black
+  highlight DiffText   ctermbg=yellow ctermfg=red   cterm=bold guibg=yellow     guifg=red
+  highlight DiffChange ctermbg=none   ctermfg=none  cterm=bold guibg=white      guifg=black
+  highlight DiffDelete                                         guibg=lightblue  guifg=lightblue
 endif
 set background=light
+
+function! GitConflictLines()
+  let l:conflict_lines = []
+  let l:patterns = ['^<<<<<<< ']
+  for lnum in range(1, line('$'))
+    let l:line = getline(lnum)
+    for pat in l:patterns
+      if l:line =~ pat
+        call add(l:conflict_lines, lnum)
+        break
+      endif
+    endfor
+  endfor
+  if !empty(l:conflict_lines)
+    return '[ ' . join(l:conflict_lines, ' ') . ' ] conflicts'
+  endif
+  return ''
+endfunction
 
 let g:lightline = {
       \ 'colorscheme': 'ayu_light',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'gitconflict' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'clipboard' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+      \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B'
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead',
+      \   'clipboard': 'ClipboardTool'
       \ },
+      \ 'component_expand': {
+      \   'gitconflict': 'GitConflictLines'
+      \ },
+      \ 'component_type': {
+      \   'gitconflict': 'warning'
+      \ }
       \ }
 set noshowmode
 
@@ -147,12 +184,6 @@ let g:python_highlight_all = 1
 " various
 "
 set number
-
-
-"
-" makes the % command work better
-"
-runtime macros/matchit.vim
 
 
 "
@@ -208,6 +239,7 @@ function! PackInit() abort
   call minpac#init()
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
+  call minpac#add('vim-scripts/matchit.zip')
   call minpac#add('junegunn/fzf')
   call minpac#add('yegappan/taglist', {'rev': 'v4.6'})
   call minpac#add('mhinz/vim-grepper')

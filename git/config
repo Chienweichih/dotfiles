@@ -5,29 +5,11 @@
 [core]
 	editor = vim
 	filemode = false
-	pager = diff-so-fancy | less --tabs=4 -RXS --pattern '^(Date|modified|added|deleted|renamed): '
+	pager = delta
 	# autocrlf = true    # enable this line in Windows
 
 [interactive]
-	diffFilter = diff-so-fancy --patch
-
-[color]
-	ui = true
-
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+	diffFilter = delta --color-only
 
 [tig]
 	main-view-id = yes
@@ -36,11 +18,22 @@
 	main-view-author = abbreviated
 	tab-size = 4
 
+[tig "bind"]
+	generic = D >git show --patch-with-stat %(commit)
+
+[delta]
+	navigate = true
+	light = true
+	side-by-side = true
+	line-numbers = true
+	wrap-max-lines = 0
+
 [diff]
 	tool = vimdiff
 
 [merge]
 	tool = vim-conflicted
+	conflictstyle = zdiff3
 
 [mergetool]
 	keepBackup = false
@@ -57,4 +50,3 @@
 # Enable this if you want to store password
 # [credential]
 #	helper = store
-
