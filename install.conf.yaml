@@ -3,16 +3,18 @@
       create: true
       relink: true
 
-- clean: ['~']
+- clean:
+    - ~/
+    - ~/.local/bin/
 
 - link:
     ~/.config/git/ignore: git/ignore
     ~/.config/tmux/tmux.conf: tmux.conf
-    ~/.local/bin/diff-so-fancy: diff-so-fancy/diff-so-fancy
     ~/.vimrc: vimrc
     $ZSH/custom/bruce.zsh: zshrc
 
 - create:
+    - ~/.local/bin
     - ~/.vim/pack/minpac/opt
 
 - shell:

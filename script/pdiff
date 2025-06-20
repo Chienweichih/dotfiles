@@ -5,6 +5,4 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-diff -u "$1" "$2" | \
-diff-so-fancy | \
-less --tabs=4 -RXS --pattern '^(Date|modified|added|deleted|renamed): '
+diff -u "$1" "$2" | delta
