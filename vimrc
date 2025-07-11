@@ -60,9 +60,6 @@ if exists('s:clip')
     autocmd TextYankPost * call system(s:clip, join(v:event.regcontents, "\n"))
   augroup END
 endif
-function! ClipboardTool()
-  return exists('s:clip') ? '[' . matchstr(s:clip, '^[^ ]*') . ']' : ''
-endfunction
 
 
 "
@@ -151,18 +148,10 @@ let g:lightline = {
       \ 'colorscheme': 'ayu_light',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'gitconflict' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'clipboard' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
-      \ },
-      \ 'component': {
-      \   'charvaluehex': '0x%B'
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'gitconflict' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'clipboard': 'ClipboardTool'
+      \   'gitbranch': 'FugitiveHead'
       \ },
       \ 'component_expand': {
       \   'gitconflict': 'GitConflictLines'

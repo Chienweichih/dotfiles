@@ -48,6 +48,11 @@ Download completion files
     curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     curl -LJO https://raw.githubusercontent.com/jonas/tig/master/contrib/tig-completion.bash
 
+## Gnome config
+
+    dconf dump /org/gnome/terminal/ > gnome_terminal.conf
+    dconf load /org/gnome/terminal/ < gnome_terminal.conf
+
 ## Appendix
 
 Install program using Autotools:
