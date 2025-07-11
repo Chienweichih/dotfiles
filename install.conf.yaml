@@ -10,6 +10,7 @@
 - link:
     ~/.config/git/ignore: git/ignore
     ~/.config/tmux/tmux.conf: tmux.conf
+    ~/.config/nvim/init.vim: init.vim
     ~/.vimrc: vimrc
     $ZSH/custom/bruce.zsh: zshrc
 
@@ -21,6 +22,7 @@
     - git submodule update --init --recursive
     - install -m 755 script/coan-defs ~/.local/bin/coan-defs
     - install -m 755 script/coan-source ~/.local/bin/coan-source
+    - install -m 755 script/pccal ~/.local/bin/pccal
     - install -m 755 script/pdiff ~/.local/bin/pdiff
     - install -m 755 script/ptime ~/.local/bin/ptime
     - install -m 755 script/t ~/.local/bin/t
