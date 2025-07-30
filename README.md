@@ -6,7 +6,7 @@ Download and install these tools:
 
 * [Git][git]
 * [Oh My Zsh][oh-my-zsh]
-* [Exuberant Ctags][ctags]
+* [Universal Ctags][ctags]
 * [fzf][fzf]
 * [ripgrep][rg]
 * [delta][delta]
@@ -75,7 +75,7 @@ Create symlinks:
 
 [git]: <https://git-scm.com/downloads/>
 [oh-my-zsh]: <https://ohmyz.sh/>
-[ctags]: <https://sourceforge.net/projects/ctags/files/>
+[ctags]: <https://github.com/universal-ctags/ctags>
 [fzf]: <https://github.com/junegunn/fzf/releases>
 [rg]: <https://github.com/BurntSushi/ripgrep/releases>
 [delta]: <https://github.com/dandavison/delta/releases>

@@ -3,5 +3,5 @@
 KEYWORD="${1:-OPENING}"
 
 rg --files | \
-ctags --verbose=yes --recurse --links=no -L - | \
+ctags --verbose=yes --recurse --links=no -L - 2>&1 | \
 rg "$KEYWORD"

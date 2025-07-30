@@ -182,17 +182,16 @@ nnoremap <leader>f :<C-u>FZF<CR>
 
 
 "
-" taglist
+" tagbar
 "
-filetype on
+let g:tagbar_left = 1
+let g:tagbar_width = max([25, winwidth(0) / 5])
+let g:tagbar_sort = 0
 
-let Tlist_Show_One_File=1
-let Tlist_Exit_OnlyWindow=1
-
-set tags=./tags,tags
+set tags=./tags;,tags
 set updatetime=100
 
-nnoremap <silent> <leader>t :TlistToggle<CR>
+nnoremap <silent> <leader>t :TagbarToggle<CR>
 
 
 "
@@ -230,7 +229,7 @@ function! PackInit() abort
 
   call minpac#add('vim-scripts/matchit.zip')
   call minpac#add('junegunn/fzf')
-  call minpac#add('yegappan/taglist', {'rev': 'v4.6'})
+  call minpac#add('preservim/tagbar')
   call minpac#add('mhinz/vim-grepper')
   call minpac#add('christoomey/vim-conflicted')
   call minpac#add('itchyny/lightline.vim')
