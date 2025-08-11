@@ -57,7 +57,7 @@ endif
 if exists('s:clip')
   augroup YankClipboard
     autocmd!
-    autocmd TextYankPost * call system(s:clip, join(v:event.regcontents, "\n"))
+    autocmd TextYankPost * silent! call system(s:clip, join(v:event.regcontents, "\n"))
   augroup END
 endif
 
@@ -244,6 +244,7 @@ function! PackInit() abort
   call minpac#add('tpope/vim-unimpaired')
   call minpac#add('tpope/vim-vinegar')
   call minpac#add('christoomey/vim-tmux-navigator')
+  call minpac#add('ConradIrwin/vim-bracketed-paste')
 endfunction
 
 command! PackUpdate call PackInit() | call minpac#update()

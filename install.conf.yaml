@@ -10,8 +10,8 @@
 - link:
     ~/.config/git/ignore: git/ignore
     ~/.config/tmux/tmux.conf: tmux.conf
-    ~/.config/nvim/init.vim: init.vim
-    ~/.vimrc: vimrc
+    ~/.config/nvim/init.vim: vim/init.vim
+    ~/.vimrc: vim/vimrc
     $ZSH/custom/bruce.zsh: zshrc
 
 - create:
