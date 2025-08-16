@@ -8,6 +8,7 @@
     - ~/.local/bin/
 
 - link:
+    ~/.config/alacritty/alacritty.toml: color/alacritty.toml
     ~/.config/git/ignore: git/ignore
     ~/.config/tmux/tmux.conf: tmux.conf
     ~/.config/nvim/init.vim: vim/init.vim

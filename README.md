@@ -4,6 +4,7 @@
 
 Download and install these tools:
 
+* [Alacritty][alacritty]
 * [Git][git]
 * [Oh My Zsh][oh-my-zsh]
 * [Universal Ctags][ctags]
@@ -48,11 +49,6 @@ Download completion files
     curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     curl -LJO https://raw.githubusercontent.com/jonas/tig/master/contrib/tig-completion.bash
 
-## Gnome config
-
-    dconf dump /org/gnome/terminal/ > gnome_terminal.conf
-    dconf load /org/gnome/terminal/ < gnome_terminal.conf
-
 ## Appendix
 
 Install program using Autotools:
@@ -73,6 +69,7 @@ Create symlinks:
 
 
 
+[alacritty]: <https://github.com/alacritty/alacritty>
 [git]: <https://git-scm.com/downloads/>
 [oh-my-zsh]: <https://ohmyz.sh/>
 [ctags]: <https://github.com/universal-ctags/ctags>
