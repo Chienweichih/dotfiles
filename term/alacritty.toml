@@ -1,0 +1,36 @@
+[window]
+padding = { x = 10, y = 0 }
+dynamic_padding = true
+dynamic_title = false
+
+[font]
+normal = { family = "Cascadia Mono", style = "Regular" }
+size = 12.0
+offset = { x = 0, y = 3}
+
+[colors.primary]
+foreground = "#000000"
+background = "#FFFFFF"
+
+[colors.normal]
+black   = "#000000"
+red     = "#AA0000"
+green   = "#00AA00"
+yellow  = "#AA5500"
+blue    = "#0000AA"
+magenta = "#AA00AA"
+cyan    = "#00AAAA"
+white   = "#AAAAAA"
+
+[colors.bright]
+black   = "#000000"
+red     = "#AA0000"
+green   = "#00AA00"
+yellow  = "#AA5500"
+blue    = "#0000AA"
+magenta = "#AA00AA"
+cyan    = "#00AAAA"
+white   = "#AAAAAA"
+
+[mouse]
+hide_when_typing = true

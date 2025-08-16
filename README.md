@@ -4,6 +4,7 @@
 
 Download and install these tools:
 
+* [Alacritty][alacritty]
 * [Git][git]
 * [Oh My Zsh][oh-my-zsh]
 * [Universal Ctags][ctags]
@@ -37,9 +38,9 @@ Copy git config and modify [user], [diff], [merge]
 
 Copy bash dotfiles
 
-    cp bash/bash_profile ~/.bash_profile
-    cp bash/bashrc ~/.bashrc
-    cp color/minttyrc ~/.config/mintty/config
+    cp term/bash/bash_profile ~/.bash_profile
+    cp term/bash/bashrc ~/.bashrc
+    cp term/bash/minttyrc ~/.config/mintty/config
 
 Download completion files
 
@@ -47,11 +48,6 @@ Download completion files
     curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     curl -LJO https://raw.githubusercontent.com/jonas/tig/master/contrib/tig-completion.bash
-
-## Gnome config
-
-    dconf dump /org/gnome/terminal/ > gnome_terminal.conf
-    dconf load /org/gnome/terminal/ < gnome_terminal.conf
 
 ## Appendix
 
@@ -73,6 +69,7 @@ Create symlinks:
 
 
 
+[alacritty]: <https://github.com/alacritty/alacritty>
 [git]: <https://git-scm.com/downloads/>
 [oh-my-zsh]: <https://ohmyz.sh/>
 [ctags]: <https://github.com/universal-ctags/ctags>

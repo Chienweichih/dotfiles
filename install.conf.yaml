@@ -8,11 +8,12 @@
     - ~/.local/bin/
 
 - link:
+    ~/.config/alacritty/alacritty.toml: term/alacritty.toml
     ~/.config/git/ignore: git/ignore
-    ~/.config/tmux/tmux.conf: tmux.conf
+    ~/.config/tmux/tmux.conf: term/tmux.conf
     ~/.config/nvim/init.vim: vim/init.vim
     ~/.vimrc: vim/vimrc
-    $ZSH/custom/bruce.zsh: zshrc
+    $ZSH/custom/bruce.zsh: term/zshrc
 
 - create:
     - ~/.local/bin
