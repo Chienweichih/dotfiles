@@ -1,7 +1,3 @@
-" vim: nowrap fdm=marker
-scriptencoding utf-8
-
-
 "
 " cmdline
 "
@@ -119,6 +115,7 @@ syntax enable
 if &t_Co == 256
   highlight LineNr     ctermfg=145    guifg=Gray
   highlight Search     ctermbg=227    guibg=Yellow
+  highlight MatchParen ctermbg=227    guibg=Yellow
   highlight DiffAdd                   ctermfg=black cterm=bold guibg=green      guifg=black
   highlight DiffText   ctermbg=yellow ctermfg=red   cterm=bold guibg=yellow     guifg=red
   highlight DiffChange ctermbg=none   ctermfg=none  cterm=bold guibg=white      guifg=black
@@ -127,21 +124,9 @@ endif
 set background=light
 
 function! GitConflictLines()
-  let l:conflict_lines = []
   let l:patterns = ['^<<<<<<< ']
-  for lnum in range(1, line('$'))
-    let l:line = getline(lnum)
-    for pat in l:patterns
-      if l:line =~ pat
-        call add(l:conflict_lines, lnum)
-        break
-      endif
-    endfor
-  endfor
-  if !empty(l:conflict_lines)
-    return '[ ' . join(l:conflict_lines, ' ') . ' ] conflicts'
-  endif
-  return ''
+  let l:conflict_lines = filter(range(1, line('$')), 'match(getline(v:val), join(l:patterns, "\\|")) != -1')
+  return !empty(l:conflict_lines) ? '[ ' . join(l:conflict_lines, ' ') . ' ] conflicts' : ''
 endfunction
 
 let g:lightline = {
@@ -176,9 +161,27 @@ set number
 
 
 "
+" nohlsearch
+"
+nnoremap <silent> <leader>l :<C-u>nohlsearch<CR>
+
+
+"
 " fzf
 "
 nnoremap <leader>f :<C-u>FZF<CR>
+
+
+"
+" vim-grepper
+"
+nnoremap <leader>g :Grepper<cr>
+
+let g:grepper       = {}
+let g:grepper.tools = ['rg']
+
+nmap <C-n> :cnext<CR>
+nmap <C-p> :cprev<CR>
 
 
 "
@@ -192,24 +195,6 @@ set tags=./tags;,tags
 set updatetime=100
 
 nnoremap <silent> <leader>t :TagbarToggle<CR>
-
-
-"
-" vim-grepper
-"
-nnoremap <leader>g :Grepper<cr>
-
-let g:grepper       = {}
-let g:grepper.tools = ['rg', 'ag', 'ack', 'grep', 'findstr', 'pt', 'git']
-
-nmap <C-n> :cnext<CR>
-nmap <C-p> :cprev<CR>
-
-
-"
-" nohlsearch
-"
-nnoremap <silent> <leader>l :<C-u>nohlsearch<CR>
 
 
 "
@@ -227,23 +212,28 @@ function! PackInit() abort
   call minpac#init()
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-  call minpac#add('vim-scripts/matchit.zip')
-  call minpac#add('junegunn/fzf')
-  call minpac#add('preservim/tagbar')
-  call minpac#add('mhinz/vim-grepper')
-  call minpac#add('christoomey/vim-conflicted')
-  call minpac#add('itchyny/lightline.vim')
+  " File and syntax enhancements
+  call minpac#add('andymass/vim-matchup')
   call minpac#add('justinmk/vim-syntax-extra')
   call minpac#add('ARM9/arm-syntax-vim')
   call minpac#add('bfrg/vim-c-cpp-modern')
   call minpac#add('vim-python/python-syntax')
-  call minpac#add('bronson/vim-visual-star-search')
+
+  " Search tools and version control
+  call minpac#add('junegunn/fzf')
+  call minpac#add('mhinz/vim-grepper')
   call minpac#add('junegunn/gv.vim')
   call minpac#add('tpope/vim-fugitive')
-  call minpac#add('tpope/vim-surround')
-  call minpac#add('tpope/vim-unimpaired')
+  call minpac#add('christoomey/vim-conflicted')
+
+  " Navigation and UI enhancements
+  call minpac#add('preservim/tagbar')
+  call minpac#add('itchyny/lightline.vim')
   call minpac#add('tpope/vim-vinegar')
   call minpac#add('christoomey/vim-tmux-navigator')
+
+  " Editing utilities and shortcuts
+  call minpac#add('bronson/vim-visual-star-search')
   call minpac#add('ConradIrwin/vim-bracketed-paste')
 endfunction
 

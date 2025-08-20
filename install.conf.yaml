@@ -21,15 +21,8 @@
 
 - shell:
     - git submodule update --init --recursive
-    - install -m 755 script/coan-defs ~/.local/bin/coan-defs
-    - install -m 755 script/coan-source ~/.local/bin/coan-source
-    - install -m 755 script/pccal ~/.local/bin/pccal
-    - install -m 755 script/pdiff ~/.local/bin/pdiff
-    - install -m 755 script/ptime ~/.local/bin/ptime
-    - install -m 755 script/t ~/.local/bin/t
+    - find script -maxdepth 1 -type f -exec install -m 755 {} ~/.local/bin/ \;
     - grep -qi microsoft /proc/version &&
-      install -m 755 script/open ~/.local/bin/open || true
-    - grep -qi microsoft /proc/version &&
-      install -m 755 script/winmerge ~/.local/bin/winmerge || true
+      find script/wsl -maxdepth 1 -type f -exec install -m 755 {} ~/.local/bin/ \; || true
     - DIR=~/.vim/pack/minpac/opt/minpac &&
       [ ! -d $DIR ] && git clone https://github.com/k-takata/minpac.git $DIR || true
