@@ -1,0 +1,14 @@
+#!/bin/bash
+
+search_root="${1:-$HOME/code}"
+output_base="${2:-$HOME/code_bundle}"
+
+find -L "$search_root" -type d -name ".git" | while read -r git_dir; do
+  repo_dir="$(dirname "$git_dir")"
+  relative_path="${repo_dir#$search_root/}"
+  bundle_output_dir="$output_base/$relative_path"
+  mkdir -p "$bundle_output_dir"
+  bundle_file="$bundle_output_dir/repo.bundle"
+  git -C "$repo_dir" bundle create "$bundle_file" --all
+  echo "Created bundle: $bundle_file"
+done

@@ -22,7 +22,5 @@
 - shell:
     - git submodule update --init --recursive
     - find script -maxdepth 1 -type f -exec install -m 755 {} ~/.local/bin/ \;
-    - grep -qi microsoft /proc/version &&
-      find script/wsl -maxdepth 1 -type f -exec install -m 755 {} ~/.local/bin/ \; || true
     - DIR=~/.vim/pack/minpac/opt/minpac &&
       [ ! -d $DIR ] && git clone https://github.com/k-takata/minpac.git $DIR || true

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# ===================
+# --suffix=none / -n
+# --indent=spaces / --indent=spaces=# / -s#
+# --style=allman / --style=bsd / --style=break / -A1
+# --add-braces / -j
+# --break-closing-braces / -y
+# --attach-closing-while / -xV
+# --indent-switches / -S
+# --indent-continuation=# / -xt#
+# --indent-labels / -L
+# --indent-preproc-block / -xW
+# --indent-preproc-define / -w
+# --convert-tabs / -c
+# --indent-preproc-cond / -xw
+# --indent-col1-comments / -Y
+# --min-conditional-indent=# / -m#
+# --max-continuation-indent=# / -M#
+# --unpad-paren / -U
+# --pad-oper / -p
+# --pad-header / -H
+# --align-pointer=name   / -k3
+# --align-reference=name   / -W3
+# --break-one-line-headers / -xb
+# --max-code-length=#   / -xC#
+# --mode=c
+# --lineend=windows / -z1
+# --lineend=linux   / -z2
+#
+# ref: http://astyle.sourceforge.net/astyle.html
+# ===================
+
+ASTYLE_PARAM="-n -s4 -A1 -j -y -xV -S -xt3 -L -xW -w -c -xw -Y -m0 -M120 -U -p -H -k3 -W3 -xb -xC200 --mode=c"
+
+if [ "$(echo "$1" | tr '[:upper:]' '[:lower:]')" = "linux" ]; then
+    ASTYLE_PARAM="$ASTYLE_PARAM -z2"
+else
+    ASTYLE_PARAM="$ASTYLE_PARAM -z1"
+fi
+
+EXCLUDE="^$"
+
+find . \( -name '*.c' -o -name '*.h' \) -print0 | grep -zvE "$EXCLUDE" | xargs -0 astyle ${ASTYLE_PARAM} --ascii --formatted

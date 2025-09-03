@@ -1,126 +1,95 @@
-"
-" cmdline
-"
-set history=5000
-
-
-"
-" filetype
-"
+"""" ===== Modern Vim: Minimal Configuration =====
+set nocompatible
 filetype plugin indent on
 
+"""" ===== Practical Vim Tip 10: Use Counts to Do Simple Arithmetic =====
+set nrformats-=octal
 
-"
-" map
-"
-cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
+"""" ===== Practical Vim Tip 19: Overwrite Existing Text with Replace Mode =====
+set tabstop=4
 
-nnoremap & :&&<Enter>
-xnoremap & :&&<Enter>
+"""" ===== Practical Vim Tip 22: Repeat Line-Wise Visual Commands =====
+set shiftwidth=4
+set softtabstop=4
+set expandtab
 
-function! Preserve(command)
-  let l:save = winsaveview()
-  execute a:command
-  call winrestview(l:save)
-endfunction
-
-command! TrimWhitespace call Preserve("%s/\\s\\+$//e")
-nmap _$ :TrimWhitespace<CR>
-
-xnoremap . :normal .<CR>
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-function! ExecuteMacroOverVisualRange()
-  echo '@'.getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-
-let mapleader = ','
-
-
-"
-" yank to system clipboard
-"
-if executable('win32yank.exe')
-  let s:clip = 'win32yank.exe -i --crlf'
-elseif executable('wl-copy')
-  let s:clip = 'wl-copy'
-elseif executable('xclip')
-  let s:clip = 'xclip -selection clipboard -in'
-elseif executable('pbcopy')
-  let s:clip = 'pbcopy'
-endif
-if exists('s:clip')
-  augroup YankClipboard
-    autocmd!
-    autocmd TextYankPost * silent! call system(s:clip, join(v:event.regcontents, "\n"))
-  augroup END
-endif
-
-
-"
-" options
-"
-set autoread
-if &compatible
-  set nocompatible
-endif
-if &diff
-  set diffopt=filler,vertical,context:1000000
-  set noreadonly
-endif
-set fileencodings=utf-8,cp950
-set fileformats=unix,dos,mac
-set foldlevelstart=99
-set hidden
-set hlsearch
-set incsearch
-set nojoinspaces
-set laststatus=2
-if has('mouse')
-  set mouse=nv
-endif
-set ruler
-set shortmess-=S
-set showcmd
-set smartcase
+"""" ===== Practical Vim Tip 32: Tab-Complete Your Ex Commands =====
 set wildmenu
 set wildmode=full
+
+"""" ===== Practical Vim Tip 34: Recall Commands from History =====
+set history=200
+
+"""" ===== Practical Vim Tip 39: Manage Hidden Files =====
+set hidden
+
+"""" ===== Practical Vim Tip 40: Divide Your Workspace into Split Windows =====
+set mouse=a
+
+"""" ===== Practical Vim Tip 42: Easy Expansion of the Active File Directory =====
+cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
+
+"""" ===== Practical Vim Tip 48: Distinguish Between Real Lines and Display Lines =====
 set nowrap
+set number
 
-" Files, backups and undo
-set noundofile
-set nobackup
-set noswapfile
+"""" ===== Practical Vim Tip 50: Don’t Throw Away the Reverse Character Search Command =====
+let mapleader=","
+noremap \ ,
 
-" Text, tab and indent related
-set tabstop=4 softtabstop=4 shiftwidth=4
+"""" ===== Practical Vim Tip 58: Jump to the Filename Under the Cursor =====
+set suffixesadd+=.c,.h,.cpp,.hpp
+" set path+=src/**,include/**
+
+"""" ===== Practical Vim Tip 64: Interact with the System Clipboard =====
 set autoindent
-set expandtab
+
+"""" ===== Practical Vim Tip 66: Normalize, Strike, Abort =====
+set novisualbell
+
+"""" ===== Practical Vim Tip 73: Tune the Case Sensitivity of Search Patterns =====
+set ignorecase
+set smartcase
+
+"""" ===== Practical Vim Tip 81: Highlight Search Matches =====
+set hlsearch
+nnoremap <silent> <leader>l :<C-u>nohlsearch<CR>
+
+"""" ===== Practical Vim Tip 82: Preview the First Match Before Execution =====
+set incsearch
+
+"""" ===== Practical Vim Tip 93: Fixing the & Command =====
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+"""" ===== Practical Vim Tip 119: Spell Check Your Work =====
+set spelllang+=cjk
+nnoremap <leader>s :set spell!<CR>
+
+"""" ===== options =====
 set smarttab
 set smartindent
 
-
-"
-" pattern
-"
-set ignorecase
-
-
-"
-" syntax
-"
+"""" ===== syntax =====
 syntax enable
+highlight LineNr     ctermfg=145    guifg=Gray
+highlight Search     ctermbg=227    guibg=Yellow
+highlight MatchParen ctermbg=227    guibg=Yellow
+highlight DiffAdd                   ctermfg=black cterm=bold guibg=green      guifg=black
+highlight DiffText   ctermbg=yellow ctermfg=red   cterm=bold guibg=yellow     guifg=red
+highlight DiffChange ctermbg=none   ctermfg=none  cterm=bold guibg=white      guifg=black
+highlight DiffDelete                                         guibg=lightblue  guifg=lightblue
 
-if &t_Co == 256
-  highlight LineNr     ctermfg=145    guifg=Gray
-  highlight Search     ctermbg=227    guibg=Yellow
-  highlight MatchParen ctermbg=227    guibg=Yellow
-  highlight DiffAdd                   ctermfg=black cterm=bold guibg=green      guifg=black
-  highlight DiffText   ctermbg=yellow ctermfg=red   cterm=bold guibg=yellow     guifg=red
-  highlight DiffChange ctermbg=none   ctermfg=none  cterm=bold guibg=white      guifg=black
-  highlight DiffDelete                                         guibg=lightblue  guifg=lightblue
-endif
+"""" ===== ARM9/arm-syntax-vim =====
+au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+
+"""" ===== vim-python/python-syntax =====
+let g:python_highlight_all = 1
+
+"""" ===== itchyny/lightline.vim =====
+set laststatus=2
+set noshowmode
+set shortmess-=S
 set background=light
 
 function! GitConflictLines()
@@ -145,96 +114,89 @@ let g:lightline = {
       \   'gitconflict': 'warning'
       \ }
       \ }
-set noshowmode
 
-" arm-syntax-vim
-au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+"""" ===== yank to system clipboard =====
+if executable('win32yank.exe')
+  let s:clip = 'win32yank.exe -i --crlf'
+elseif executable('wl-copy')
+  let s:clip = 'wl-copy'
+elseif executable('xclip')
+  let s:clip = 'xclip -selection clipboard -in'
+elseif executable('pbcopy')
+  let s:clip = 'pbcopy'
+endif
+if exists('s:clip')
+  augroup YankClipboard
+    autocmd!
+    autocmd TextYankPost * silent! call system(s:clip, join(v:event.regcontents, "\n"))
+  augroup END
+endif
 
-" python-syntax
-let g:python_highlight_all = 1
-
-
-"
-" various
-"
-set number
-
-
-"
-" nohlsearch
-"
-nnoremap <silent> <leader>l :<C-u>nohlsearch<CR>
-
-
-"
-" fzf
-"
-nnoremap <leader>f :<C-u>FZF<CR>
-
-
-"
-" vim-grepper
-"
-nnoremap <leader>g :Grepper<cr>
-
-let g:grepper       = {}
-let g:grepper.tools = ['rg']
-
-nmap <C-n> :cnext<CR>
-nmap <C-p> :cprev<CR>
-
-
-"
-" tagbar
-"
+"""" ===== preservim/tagbar =====
+nnoremap <silent> <leader>t :TagbarToggle<CR>
+set updatetime=100
 let g:tagbar_left = 1
 let g:tagbar_width = max([25, winwidth(0) / 5])
 let g:tagbar_sort = 0
 
-set tags=./tags;,tags
-set updatetime=100
+"""" ===== Modern Vim Tip 7: Finding Files Using Fuzzy Path Matching =====
+nnoremap <leader>f :<C-u>FZF<CR>
 
-nnoremap <silent> <leader>t :TagbarToggle<CR>
+"""" ===== Modern Vim Tip 13: Searching Files with Grep-Alikes =====
+let g:grepper       = {}
+let g:grepper.tools = ['rg']
+nnoremap <leader>g :Grepper<cr>
+nnoremap <C-n> :cnext<CR>
+nnoremap <C-p> :cprev<CR>
 
+"""" ===== Modern Vim Tip 17: Seamlessly Navigating tmux Panes and Vim Windows =====
+let g:tmux_navigator_no_wrap = 1
 
-"
-" tmux
-"
-let  g:tmux_navigator_no_wrap = 1
+"""" ===== Modern Vim Tip 24: Making Undo Persist Between Sessions =====
+set undofile
+if !has('nvim')
+  set undodir=~/.vim/undo
+endif
+augroup vimrc
+  autocmd!
+  autocmd BufWritePre /tmp/* setlocal noundofile
+augroup END
 
-
-"
-" minpac
-"
+"""" ===== Modern Vim Tip 6: Managing Plugins with minpac =====
 function! PackInit() abort
   packadd minpac
 
   call minpac#init()
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-  " File and syntax enhancements
-  call minpac#add('andymass/vim-matchup')
-  call minpac#add('justinmk/vim-syntax-extra')
-  call minpac#add('ARM9/arm-syntax-vim')
-  call minpac#add('bfrg/vim-c-cpp-modern')
-  call minpac#add('vim-python/python-syntax')
-
-  " Search tools and version control
+  """" ===== Modern Vim Tip 7: Finding Files Using Fuzzy Path Matching =====
   call minpac#add('junegunn/fzf')
-  call minpac#add('mhinz/vim-grepper')
-  call minpac#add('junegunn/gv.vim')
-  call minpac#add('tpope/vim-fugitive')
-  call minpac#add('christoomey/vim-conflicted')
 
-  " Navigation and UI enhancements
-  call minpac#add('preservim/tagbar')
-  call minpac#add('itchyny/lightline.vim')
-  call minpac#add('tpope/vim-vinegar')
+  """" ===== Modern Vim Tip 13: Searching Files with Grep-Alikes =====
+  call minpac#add('mhinz/vim-grepper')
+
+  """" ===== Modern Vim Tip 17: Seamlessly Navigating tmux Panes and Vim Windows =====
   call minpac#add('christoomey/vim-tmux-navigator')
 
-  " Editing utilities and shortcuts
+  """" ===== Practical Vim Tip 87: Search for the Current Visual Selection =====
   call minpac#add('bronson/vim-visual-star-search')
+
+  """" ===== Practical Vim Tip 110: Customize the grep Program =====
+  call minpac#add('tpope/vim-fugitive')
+
+  """" ===== syntax =====
+  call minpac#add('ARM9/arm-syntax-vim')
+  call minpac#add('bfrg/vim-c-cpp-modern')
+  call minpac#add('justinmk/vim-syntax-extra')
+  call minpac#add('vim-python/python-syntax')
+
+  """" ===== others =====
   call minpac#add('ConradIrwin/vim-bracketed-paste')
+  call minpac#add('andymass/vim-matchup')
+  call minpac#add('itchyny/lightline.vim')
+  call minpac#add('junegunn/gv.vim')
+  call minpac#add('preservim/tagbar')
+  call minpac#add('tpope/vim-vinegar')
 endfunction
 
 command! PackUpdate call PackInit() | call minpac#update()

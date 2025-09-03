@@ -2,19 +2,17 @@
 
 ## Installation
 
-Download and install these tools:
-
 * [Alacritty][alacritty]
-* [Git][git]
 * [Oh My Zsh][oh-my-zsh]
+* [tmux][tmux]
+* [tig][tig]
 * [Universal Ctags][ctags]
 * [fzf][fzf]
 * [ripgrep][rg]
 * [delta][delta]
-* [tmux][tmux]
 * [coan][coan]
 * [Programmer calculator][pcalc]
-* [win32yank][win32yank]
+* [wl-clipboard][wl-clipboard] / [win32yank][win32yank]
 
 ## Deployment
 
@@ -49,35 +47,22 @@ Download completion files
     curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     curl -LJO https://raw.githubusercontent.com/jonas/tig/master/contrib/tig-completion.bash
 
-## Appendix
+## Create symlinks
 
-Install program using Autotools:
-
-    ./configure --prefix=$HOME/.local
-    make
-    make install
-
-Install program using CMake:
-
-    cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/.local .
-    make all install
-
-Create symlinks:
-
-    ln -s /mnt/chromeos/MyFiles/ ~/MyFiles
-    ln -s /mnt/c/Users/_name_/Desktop ~/Desktop
+    ln -s /mnt/c/Users/<user_name>/Desktop ~/Desktop
 
 
 
 [alacritty]: <https://github.com/alacritty/alacritty>
-[git]: <https://git-scm.com/downloads/>
-[oh-my-zsh]: <https://ohmyz.sh/>
+[oh-my-zsh]: <https://github.com/ohmyzsh/ohmyzsh>
+[tmux]: <https://github.com/tmux/tmux>
+[tig]: <https://github.com/jonas/tig>
 [ctags]: <https://github.com/universal-ctags/ctags>
-[fzf]: <https://github.com/junegunn/fzf/releases>
-[rg]: <https://github.com/BurntSushi/ripgrep/releases>
-[delta]: <https://github.com/dandavison/delta/releases>
-[tmux]: <https://github.com/tmux/tmux/releases>
-[coan]: <https://coan2.sourceforge.net/index.php?page=install>
+[fzf]: <https://github.com/junegunn/fzf>
+[rg]: <https://github.com/BurntSushi/ripgrep>
+[delta]: <https://github.com/dandavison/delta>
+[coan]: <https://coan2.sourceforge.net/index.php>
 [pcalc]: <https://github.com/alt-romes/programmer-calculator>
-[win32yank]: <https://github.com/equalsraf/win32yank/releases>
+[wl-clipboard]: <https://github.com/bugaevc/wl-clipboard>
+[win32yank]: <https://github.com/equalsraf/win32yank>
 [dotbot]: <https://github.com/anishathalye/dotbot>

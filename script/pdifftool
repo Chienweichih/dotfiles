@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ "$#" -eq 2 ]; then
+    LOCAL="$1"
+    REMOTE="$2"
+    if command -v meld &> /dev/null; then
+        meld "$LOCAL" "$REMOTE"
+    else
+        if command -v wslpath &> /dev/null; then
+            LOCAL=$(wslpath -w "$LOCAL")
+            REMOTE=$(wslpath -w "$REMOTE")
+            WINMERGE="/mnt/c/Program Files/WinMerge/WinMergeU.exe"
+        else
+            WINMERGE="/c/Program Files/WinMerge/WinMergeU.exe"
+        fi
+        "$WINMERGE" -u -e "$LOCAL" "$REMOTE"
+    fi
+elif [ "$#" -eq 4 ]; then
+    LOCAL="$1"
+    BASE="$2"
+    REMOTE="$3"
+    MERGED="$4"
+    if command -v meld &> /dev/null; then
+        meld "$LOCAL" "$BASE" "$REMOTE" --output="$MERGED"
+    else
+        if command -v wslpath &> /dev/null; then
+            LOCAL=$(wslpath -w "$LOCAL")
+            REMOTE=$(wslpath -w "$REMOTE")
+            MERGED=$(wslpath -w "$MERGED")
+            WINMERGE="/mnt/c/Program Files/WinMerge/WinMergeU.exe"
+        else
+            WINMERGE="/c/Program Files/WinMerge/WinMergeU.exe"
+        fi
+        "$WINMERGE" -u -e -dl "Local" -dr "Remote" "$LOCAL" "$REMOTE" "$MERGED"
+    fi
+else
+    echo "Usage error: please provide 2 or 4 file paths"
+    exit 1
+fi

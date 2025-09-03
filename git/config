@@ -29,23 +29,19 @@
 	wrap-max-lines = 0
 
 [diff]
-	tool = vimdiff
+	tool = pdifftool_diff
 
 [merge]
-	tool = vim-conflicted
-	conflictstyle = zdiff3
+	tool = pdifftool_merge
 
 [mergetool]
 	keepBackup = false
 
-[mergetool "vim-conflicted"]
-	cmd = vim +Conflicted
+[difftool "pdifftool_diff"]
+	cmd = pdifftool $LOCAL $REMOTE
 
-[difftool "WinMergeU_diff"]
-	cmd = winmerge $LOCAL $REMOTE
-
-[mergetool "WinMergeU_merge"]
-	cmd = winmerge $LOCAL $REMOTE $MERGED
+[mergetool "pdifftool_merge"]
+	cmd = pdifftool $LOCAL $BASE $REMOTE $MERGED
 
 # Enable this if you want to store password
 # [credential]

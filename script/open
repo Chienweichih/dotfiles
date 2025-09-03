@@ -1,0 +1,14 @@
+#!/bin/bash
+
+folder="${1:-.}"
+if command -v wslpath &> /dev/null; then
+    folder=$(wslpath -w "$folder")
+fi
+
+if command -v xdg-open &> /dev/null; then
+    OPEN_CMD="xdg-open"
+else
+    OPEN_CMD="explorer.exe"
+fi
+
+$OPEN_CMD "$folder"
