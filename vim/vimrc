@@ -1,46 +1,67 @@
-"
-" cmdline
-"
-set history=5000
-
-
-"
-" filetype
-"
+"""" ===== Modern Vim: Minimal Configuration =====
+set nocompatible
 filetype plugin indent on
 
+"""" ===== Modern Vim Tip 24: Making Undo Persist Between Sessions =====
+set undofile
+if !has('nvim')
+  set undodir=~/.vim/undo
+endif
+augroup vimrc
+  autocmd!
+  autocmd BufWritePre /tmp/* setlocal noundofile
+augroup END
 
-"
-" map
-"
+"""" ===== Pratical Vim Tip 32: Tab-Complete Your Ex Commands =====
+set wildmenu
+set wildmode=full
+
+"""" ===== Pratical Vim Tip 34: Recall Commands from History =====
+set history=200
+
+"""" ===== Pratical Vim Tip 39: Manage Hidden Files =====
+set hidden
+
+"""" ===== Pratical Vim Tip 42: Easy Expansion of the Active File Directory =====
 cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
 
-nnoremap & :&&<Enter>
-xnoremap & :&&<Enter>
+"""" ===== Pratical Vim Tip 48: Distinguish Between Real Lines and Display Lines =====
+set nowrap
 
-function! Preserve(command)
-  let l:save = winsaveview()
-  execute a:command
-  call winrestview(l:save)
-endfunction
+"""" ===== Pratical Vim Tip 50: Don’t Throw Away the Reverse Character Search Command =====
+let mapleader=","
+noremap \ ,
 
-command! TrimWhitespace call Preserve("%s/\\s\\+$//e")
-nmap _$ :TrimWhitespace<CR>
+"""" ===== Pratical Vim Tip 64: Interact with the System Clipboard =====
+set autoindent
 
-xnoremap . :normal .<CR>
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+"""" ===== Pratical Vim Tip 73: Tune the Case Sensitivity of Search Patterns =====
+set ignorecase
+set smartcase
 
-function! ExecuteMacroOverVisualRange()
-  echo '@'.getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
+"""" ===== Pratical Vim Tip 81: Highlight Search Matches =====
+set hlsearch
+nnoremap <silent> <leader>l :<C-u>nohlsearch<CR>
 
-let mapleader = ','
+"""" ===== Pratical Vim Tip 82: Preview the First Match Before Execution =====
+set incsearch
 
+"""" ===== Pratical Vim Tip 93: Fixing the & Command =====
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
 
-"
-" yank to system clipboard
-"
+"""" ===== Pratical Vim Appendix 1: Use four spaces for indentation =====
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
+"""" ===== various =====
+set number
+set smarttab
+set smartindent
+
+"""" ===== yank to system clipboard =====
 if executable('win32yank.exe')
   let s:clip = 'win32yank.exe -i --crlf'
 elseif executable('wl-copy')
@@ -57,59 +78,7 @@ if exists('s:clip')
   augroup END
 endif
 
-
-"
-" options
-"
-set autoread
-if &compatible
-  set nocompatible
-endif
-if &diff
-  set diffopt=filler,vertical,context:1000000
-  set noreadonly
-endif
-set fileencodings=utf-8,cp950
-set fileformats=unix,dos,mac
-set foldlevelstart=99
-set hidden
-set hlsearch
-set incsearch
-set nojoinspaces
-set laststatus=2
-if has('mouse')
-  set mouse=nv
-endif
-set ruler
-set shortmess-=S
-set showcmd
-set smartcase
-set wildmenu
-set wildmode=full
-set nowrap
-
-" Files, backups and undo
-set noundofile
-set nobackup
-set noswapfile
-
-" Text, tab and indent related
-set tabstop=4 softtabstop=4 shiftwidth=4
-set autoindent
-set expandtab
-set smarttab
-set smartindent
-
-
-"
-" pattern
-"
-set ignorecase
-
-
-"
-" syntax
-"
+"""" ===== syntax =====
 syntax enable
 
 if &t_Co == 256
@@ -123,6 +92,7 @@ if &t_Co == 256
 endif
 set background=light
 
+"""" ===== Plugin: lightline.vim =====
 function! GitConflictLines()
   let l:patterns = ['^<<<<<<< ']
   let l:conflict_lines = filter(range(1, line('$')), 'match(getline(v:val), join(l:patterns, "\\|")) != -1')
@@ -145,36 +115,20 @@ let g:lightline = {
       \   'gitconflict': 'warning'
       \ }
       \ }
+set laststatus=2
 set noshowmode
+set shortmess-=S
 
-" arm-syntax-vim
+"""" ===== Plugin: arm-syntax-vim =====
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
-" python-syntax
+"""" ===== Plugin: python-syntax =====
 let g:python_highlight_all = 1
 
-
-"
-" various
-"
-set number
-
-
-"
-" nohlsearch
-"
-nnoremap <silent> <leader>l :<C-u>nohlsearch<CR>
-
-
-"
-" fzf
-"
+"""" ===== Plugin: fzf =====
 nnoremap <leader>f :<C-u>FZF<CR>
 
-
-"
-" vim-grepper
-"
+"""" ===== Plugin: vim-grepper =====
 nnoremap <leader>g :Grepper<cr>
 
 let g:grepper       = {}
@@ -183,10 +137,7 @@ let g:grepper.tools = ['rg']
 nmap <C-n> :cnext<CR>
 nmap <C-p> :cprev<CR>
 
-
-"
-" tagbar
-"
+"""" ===== Plugin: tagbar =====
 let g:tagbar_left = 1
 let g:tagbar_width = max([25, winwidth(0) / 5])
 let g:tagbar_sort = 0
@@ -196,16 +147,10 @@ set updatetime=100
 
 nnoremap <silent> <leader>t :TagbarToggle<CR>
 
-
-"
-" tmux
-"
+"""" ===== Modern Vim Tip 17: Seamlessly Navigating tmux Panes and Vim Windows =====
 let  g:tmux_navigator_no_wrap = 1
 
-
-"
-" minpac
-"
+"""" ===== Modern Vim Tip 6: Managing Plugins with minpac =====
 function! PackInit() abort
   packadd minpac
 

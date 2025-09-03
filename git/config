@@ -29,7 +29,7 @@
 	wrap-max-lines = 0
 
 [diff]
-	tool = vimdiff
+	tool = meld
 
 [merge]
 	tool = vim-conflicted
