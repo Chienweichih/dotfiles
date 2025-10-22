@@ -24,6 +24,18 @@ Using [Dotbot][dotbot] to install dotfiles, or manual execute commands that writ
 
 ## Other setting
 
+Update Tmux plugins
+
+> `prefix` + <kbd>I</kbd>
+> - Installs new plugins from GitHub or any other git repository
+> - Refreshes TMUX environment
+
+> `prefix` + <kbd>U</kbd>
+> - updates plugin(s)
+
+> `prefix` + <kbd>alt</kbd> + <kbd>u</kbd>
+> - remove/uninstall plugins not on the plugin list
+
 Update Vim package
 
     vim -c "PackUpdateQuit"

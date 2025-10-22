@@ -139,6 +139,9 @@ let g:tagbar_left = 1
 let g:tagbar_width = max([25, winwidth(0) / 5])
 let g:tagbar_sort = 0
 
+"""" ===== tpope/vim-vinegar =====
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+
 """" ===== Modern Vim Tip 7: Finding Files Using Fuzzy Path Matching =====
 nnoremap <leader>f :<C-u>FZF<CR>
 

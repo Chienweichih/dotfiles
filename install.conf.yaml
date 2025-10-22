@@ -22,5 +22,7 @@
 - shell:
     - git submodule update --init --recursive
     - find script -maxdepth 1 -type f -exec install -m 755 {} ~/.local/bin/ \;
-    - DIR=~/.vim/pack/minpac/opt/minpac &&
-      [ ! -d $DIR ] && git clone https://github.com/k-takata/minpac.git $DIR || true
+    - DIR=~/.vim/pack/minpac/opt/minpac; [ ! -d "$DIR" ] &&
+      git clone https://github.com/k-takata/minpac.git "$DIR" || true
+    - DIR=~/.tmux/plugins/tpm; [ ! -d "$DIR" ] &&
+      git clone https://github.com/tmux-plugins/tpm.git "$DIR" || true
