@@ -13,6 +13,7 @@
 * [coan][coan]
 * [Programmer calculator][pcalc]
 * [wl-clipboard][wl-clipboard] / [win32yank][win32yank]
+* [Double Commander][doublecmd]
 
 ## Deployment
 
@@ -77,4 +78,5 @@ Download completion files
 [pcalc]: <https://github.com/alt-romes/programmer-calculator>
 [wl-clipboard]: <https://github.com/bugaevc/wl-clipboard>
 [win32yank]: <https://github.com/equalsraf/win32yank>
+[doublecmd]: <https://github.com/doublecmd/doublecmd>
 [dotbot]: <https://github.com/anishathalye/dotbot>

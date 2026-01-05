@@ -34,3 +34,7 @@ white   = "#AAAAAA"
 
 [mouse]
 hide_when_typing = true
+
+[[keyboard.bindings]]
+key = "NumpadEnter"
+chars = "\r"

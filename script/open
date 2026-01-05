@@ -8,7 +8,7 @@ fi
 if command -v xdg-open &> /dev/null; then
     OPEN_CMD="xdg-open"
 else
-    OPEN_CMD="explorer.exe"
+    OPEN_CMD="start doublecmd.exe"
 fi
 
 $OPEN_CMD "$folder"
