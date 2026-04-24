@@ -1,7 +1,7 @@
 #!/bin/bash
 
 search_root="${1:-$HOME/code}"
-output_base="${2:-$HOME/code_bundle}"
+output_base="${2:-$HOME/archive_code_bundle}"
 
 find -L "$search_root" -type d -name ".git" | while read -r git_dir; do
   repo_dir="$(dirname "$git_dir")"

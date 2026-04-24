@@ -37,6 +37,9 @@
 [mergetool]
 	keepBackup = false
 
+[difftool "winmerge"]
+	cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -u -e \"$LOCAL\" \"$REMOTE\"
+
 [difftool "pdifftool_diff"]
 	cmd = pdifftool $LOCAL $REMOTE
 

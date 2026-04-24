@@ -33,7 +33,7 @@
 
 ASTYLE_PARAM="-n -s4 -A1 -j -y -xV -S -xt3 -L -xW -w -c -xw -Y -m0 -M120 -U -p -H -k3 -W3 -xb -xC200 --mode=c"
 
-if [ "$(echo "$1" | tr '[:upper:]' '[:lower:]')" = "linux" ]; then
+if [ "$(echo ${1:-"linux"} | tr '[:upper:]' '[:lower:]')" = "linux" ]; then
     ASTYLE_PARAM="$ASTYLE_PARAM -z2"
 else
     ASTYLE_PARAM="$ASTYLE_PARAM -z1"
@@ -41,4 +41,10 @@ fi
 
 EXCLUDE="^$"
 
-find . \( -name '*.c' -o -name '*.h' \) -print0 | grep -zvE "$EXCLUDE" | xargs -0 astyle ${ASTYLE_PARAM} --ascii --formatted
+if echo $(uname -s) | grep -Eq '^(MSYS|MINGW)'; then
+    ASTYLE_CMD="astyle.exe"
+else
+    ASTYLE_CMD="astyle"
+fi
+
+find . \( -name '*.c' -o -name '*.h' \) -print0 | grep -zvE "$EXCLUDE" | xargs -0 $ASTYLE_CMD ${ASTYLE_PARAM} --ascii --formatted

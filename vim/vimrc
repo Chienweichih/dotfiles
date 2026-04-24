@@ -20,6 +20,10 @@ set wildmode=full
 """" ===== Practical Vim Tip 34: Recall Commands from History =====
 set history=200
 
+"""" ===== Practical Vim Tip 37: Track Open Files with the Buffer List =====
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprev<CR>
+
 """" ===== Practical Vim Tip 39: Manage Hidden Files =====
 set hidden
 
@@ -64,21 +68,44 @@ xnoremap & :&&<CR>
 
 """" ===== Practical Vim Tip 119: Spell Check Your Work =====
 set spelllang+=cjk
-nnoremap <leader>s :set spell!<CR>
+nnoremap <leader>S :set spell!<CR>
 
 """" ===== options =====
 set smarttab
 set smartindent
 
 """" ===== syntax =====
+set background=light
 syntax enable
-highlight LineNr     ctermfg=145    guifg=Gray
-highlight Search     ctermbg=227    guibg=Yellow
-highlight MatchParen ctermbg=227    guibg=Yellow
-highlight DiffAdd                   ctermfg=black cterm=bold guibg=green      guifg=black
-highlight DiffText   ctermbg=yellow ctermfg=red   cterm=bold guibg=yellow     guifg=red
-highlight DiffChange ctermbg=none   ctermfg=none  cterm=bold guibg=white      guifg=black
-highlight DiffDelete                                         guibg=lightblue  guifg=lightblue
+highlight LineNr     ctermfg=145
+highlight Search     ctermbg=227
+highlight MatchParen ctermbg=227
+highlight DiffAdd    ctermfg=black  cterm=bold
+highlight DiffText   ctermbg=yellow ctermfg=red  cterm=bold
+highlight DiffChange ctermbg=none   ctermfg=none cterm=bold
+
+"""" ===== gvim =====
+if has('gui_running')
+  set guifont=Cascadia\ Mono:h12
+  highlight Normal     guifg=#000000   guibg=#FFFFFF
+  highlight Comment    guifg=#00AA00   gui=none
+  highlight Constant   guifg=#AA0000   gui=none
+  highlight String     guifg=#AA0000   gui=none
+  highlight Identifier guifg=#000000   gui=none
+  highlight Statement  guifg=#AA5500   gui=bold
+  highlight PreProc    guifg=#AA00AA   gui=none
+  highlight Type       guifg=#0000AA   gui=none
+  highlight Special    guifg=#00AAAA   gui=none
+  highlight Underlined guifg=#0000AA   gui=underline
+  highlight Todo       guifg=#000000   guibg=#AA5500
+  highlight LineNr     guifg=Gray
+  highlight Search     guibg=Yellow
+  highlight MatchParen guibg=Yellow
+  highlight DiffAdd    guibg=green     guifg=black
+  highlight DiffText   guibg=yellow    guifg=red
+  highlight DiffChange guibg=white     guifg=black
+  highlight DiffDelete guibg=lightblue guifg=lightblue
+endif
 
 """" ===== ARM9/arm-syntax-vim =====
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
@@ -90,7 +117,6 @@ let g:python_highlight_all = 1
 set laststatus=2
 set noshowmode
 set shortmess-=S
-set background=light
 
 function! GitConflictLines()
   let l:patterns = ['^<<<<<<< ']
@@ -143,14 +169,34 @@ let g:tagbar_sort = 0
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
 """" ===== Modern Vim Tip 7: Finding Files Using Fuzzy Path Matching =====
-nnoremap <leader>f :<C-u>FZF<CR>
-
-"""" ===== Modern Vim Tip 13: Searching Files with Grep-Alikes =====
-let g:grepper       = {}
-let g:grepper.tools = ['rg']
-nnoremap <leader>g :Grepper<cr>
-nnoremap <C-n> :cnext<CR>
-nnoremap <C-p> :cprev<CR>
+let $FZF_DEFAULT_OPTS = $FZF_DEFAULT_OPTS . ' --bind ctrl-u:half-page-up,ctrl-d:half-page-down'
+let g:fzf_layout = { 'down': '40%' }
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'query':   ['fg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+nnoremap <leader>f :GFiles<CR>
+nnoremap <leader>s :GFiles?<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>o :History<CR>
+nnoremap <leader>T :Tags<CR>
+nnoremap <leader>g :Rg <C-R><C-W>
+xnoremap <leader>g y:Rg <C-R>"
+nnoremap <leader>/ :BLines <C-R><C-W>
+xnoremap <leader>/ y:BLines <C-R>"
 
 """" ===== Modern Vim Tip 17: Seamlessly Navigating tmux Panes and Vim Windows =====
 let g:tmux_navigator_no_wrap = 1
@@ -174,12 +220,13 @@ function! PackInit() abort
 
   """" ===== Modern Vim Tip 7: Finding Files Using Fuzzy Path Matching =====
   call minpac#add('junegunn/fzf')
-
-  """" ===== Modern Vim Tip 13: Searching Files with Grep-Alikes =====
-  call minpac#add('mhinz/vim-grepper')
+  call minpac#add('junegunn/fzf.vim')
 
   """" ===== Modern Vim Tip 17: Seamlessly Navigating tmux Panes and Vim Windows =====
   call minpac#add('christoomey/vim-tmux-navigator')
+
+  """" ===== Modern Vim Tip 55: Jump Between Matching Parentheses =====
+  call minpac#add('tpope/vim-surround')
 
   """" ===== Practical Vim Tip 87: Search for the Current Visual Selection =====
   call minpac#add('bronson/vim-visual-star-search')
@@ -199,6 +246,7 @@ function! PackInit() abort
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('junegunn/gv.vim')
   call minpac#add('preservim/tagbar')
+  call minpac#add('tpope/vim-commentary')
   call minpac#add('tpope/vim-vinegar')
 endfunction
 

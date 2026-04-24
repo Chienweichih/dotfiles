@@ -2,18 +2,25 @@
 
 ## Installation
 
-* [Alacritty][alacritty]
-* [Oh My Zsh][oh-my-zsh]
-* [tmux][tmux]
-* [tig][tig]
-* [Universal Ctags][ctags]
-* [fzf][fzf]
-* [ripgrep][rg]
-* [delta][delta]
-* [coan][coan]
-* [Programmer calculator][pcalc]
-* [wl-clipboard][wl-clipboard] / [win32yank][win32yank]
-* [Double Commander][doublecmd]
+* [Alacritty][alacritty] [Linux]
+* [Oh My Zsh][oh-my-zsh] [Linux]
+* [tmux][tmux] [Linux]
+* [Cascadia Code][cascadia-code] [All]
+* [Windows Terminal][terminal] [Windows]
+* [Double Commander][doublecmd] [Windows]
+* [WinSCP][winscp] [Windows]
+* [tig][tig] [All]
+* [Universal Ctags][ctags] [All]
+* [fzf][fzf] [All]
+* [bat][bat] [All]
+* [ripgrep][rg] [All]
+* [delta][delta] [All]
+* [coan][coan] [All]
+* [Programmer calculator][pcalc] [Linux]
+* [wl-clipboard][wl-clipboard] [Linux]
+* [win32yank][win32yank] [Windows]
+* [Meld][meld] [Linux]
+* [WinMerge][winmerge] [Windows]
 
 ## Deployment
 
@@ -23,7 +30,7 @@ Clone this repository:
 
 Using [Dotbot][dotbot] to install dotfiles, or manual execute commands that write in install.conf.yaml
 
-## Other setting
+## Manual Configuration
 
 Update Tmux plugins
 
@@ -45,22 +52,29 @@ Copy git config and modify [user], [diff], [merge]
 
     cp git/config ~/.config/git/config
 
-## Git Bash
+## Windows Configuration
 
-Copy bash dotfiles
+Download Git for Windows Portable and add to %PATH%
 
-    cp term/bash/bash_profile ~/.bash_profile
-    cp term/bash/bashrc ~/.bashrc
-    cp term/bash/minttyrc ~/.config/mintty/config
+> [https://git-scm.com/install/windows](https://git-scm.com/install/windows)
 
-Download completion files
+Git config
 
-    cd ~/.bash_completion.d
-    curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
-    curl -LJO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-    curl -LJO https://raw.githubusercontent.com/jonas/tig/master/contrib/tig-completion.bash
+    %USERPROFILE%\.config\git\config
+    %USERPROFILE%\.config\git\ignore
 
-## Create symlinks
+Download Vim zip package and add to %PATH%
+
+> [https://www.vim.org/download.php](https://www.vim.org/download.php)
+
+Vim config
+
+    %USERPROFILE%\_vimrc
+    git clone https://github.com/k-takata/minpac.git %USERPROFILE%\vimfiles\pack\minpac\opt\minpac
+
+## Miscellaneous
+
+Create symlinks
 
     ln -s /mnt/c/Users/<user_name>/Desktop ~/Desktop
 
@@ -69,14 +83,20 @@ Download completion files
 [alacritty]: <https://github.com/alacritty/alacritty>
 [oh-my-zsh]: <https://github.com/ohmyzsh/ohmyzsh>
 [tmux]: <https://github.com/tmux/tmux>
+[cascadia-code]: <https://github.com/microsoft/cascadia-code>
+[terminal]: <https://github.com/microsoft/terminal>
+[doublecmd]: <https://github.com/doublecmd/doublecmd>
+[winscp]: <https://github.com/winscp/winscp>
 [tig]: <https://github.com/jonas/tig>
 [ctags]: <https://github.com/universal-ctags/ctags>
 [fzf]: <https://github.com/junegunn/fzf>
+[bat]: <https://github.com/sharkdp/bat>
 [rg]: <https://github.com/BurntSushi/ripgrep>
 [delta]: <https://github.com/dandavison/delta>
 [coan]: <https://coan2.sourceforge.net/index.php>
 [pcalc]: <https://github.com/alt-romes/programmer-calculator>
 [wl-clipboard]: <https://github.com/bugaevc/wl-clipboard>
 [win32yank]: <https://github.com/equalsraf/win32yank>
-[doublecmd]: <https://github.com/doublecmd/doublecmd>
+[meld]: <https://gitlab.gnome.org/GNOME/meld>
+[winmerge]: <https://github.com/WinMerge/winmerge>
 [dotbot]: <https://github.com/anishathalye/dotbot>
