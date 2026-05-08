@@ -1,84 +1,137 @@
 # dotfiles
 
-## Installation
+My personal dotfiles for Linux and Windows, managed with [Dotbot][dotbot].
 
-* [Alacritty][alacritty] [Linux]
-* [Oh My Zsh][oh-my-zsh] [Linux]
-* [tmux][tmux] [Linux]
-* [Cascadia Code][cascadia-code] [All]
-* [Windows Terminal][terminal] [Windows]
-* [Double Commander][doublecmd] [Windows]
-* [WinSCP][winscp] [Windows]
-* [tig][tig] [All]
-* [Universal Ctags][ctags] [All]
-* [fzf][fzf] [All]
-* [bat][bat] [All]
-* [ripgrep][rg] [All]
-* [delta][delta] [All]
-* [coan][coan] [All]
-* [Programmer calculator][pcalc] [Linux]
-* [wl-clipboard][wl-clipboard] [Linux]
-* [win32yank][win32yank] [Windows]
-* [Meld][meld] [Linux]
-* [WinMerge][winmerge] [Windows]
+## Tools & Applications
+
+### Linux
+
+| Tool | Description |
+|---|---|
+| [Alacritty][alacritty] | GPU-accelerated terminal emulator |
+| [Oh My Zsh][oh-my-zsh] | Zsh shell framework with plugins and themes |
+| [tmux][tmux] | Terminal multiplexer for managing multiple sessions |
+| [Programmer Calculator][pcalc] | Calculator designed for programmers (hex, bin, oct) |
+| [wl-clipboard][wl-clipboard] | Wayland clipboard utilities (`wl-copy` / `wl-paste`) |
+| [Meld][meld] | Visual diff and merge tool |
+
+### Windows
+
+| Tool | Description |
+|---|---|
+| [Windows Terminal][terminal] | Modern terminal application for Windows |
+| [Double Commander][doublecmd] | Two-panel file manager |
+| [WinSCP][winscp] | SFTP/FTP client for file transfer |
+| [win32yank][win32yank] | Clipboard tool for Windows, useful with Vim/Neovim |
+| [WinMerge][winmerge] | Visual diff and merge tool for Windows |
+
+### Cross-platform
+
+| Tool | Description |
+|---|---|
+| [Cascadia Code][cascadia-code] | Programming font with ligatures support |
+| [tig][tig] | Text-mode interface for browsing Git repositories |
+| [Universal Ctags][ctags] | Source code indexing tool for code navigation |
+| [fzf][fzf] | Command-line fuzzy finder |
+| [bat][bat] | `cat` replacement with syntax highlighting |
+| [ripgrep][rg] | Fast recursive text search tool (better `grep`) |
+| [delta][delta] | Syntax-highlighting pager for Git diffs |
+| [coan][coan] | C/C++ preprocessor analysis tool |
+
+---
 
 ## Deployment
 
-Clone this repository:
+Clone this repository (including submodules):
 
-    git clone --recurse-submodules https://github.com/Chienweichih/dotfiles.git
+```bash
+git clone --recurse-submodules https://github.com/Chienweichih/dotfiles.git
+```
 
-Using [Dotbot][dotbot] to install dotfiles, or manual execute commands that write in install.conf.yaml
+Then use [Dotbot][dotbot] to automatically install the dotfiles:
+
+```bash
+./install
+```
+
+Alternatively, you can manually execute the commands listed in `install.conf.yaml`.
+
+---
 
 ## Manual Configuration
 
-Update Tmux plugins
+### Tmux Plugins
 
-> `prefix` + <kbd>I</kbd>
-> - Installs new plugins from GitHub or any other git repository
-> - Refreshes TMUX environment
+Tmux plugins are managed by [TPM (Tmux Plugin Manager)](https://github.com/tmux-plugins/tpm). Use the following key bindings inside a tmux session:
 
-> `prefix` + <kbd>U</kbd>
-> - updates plugin(s)
+| Key Binding | Action |
+|---|---|
+| `prefix` + `I` | Install new plugins and refresh the environment |
+| `prefix` + `U` | Update installed plugins |
+| `prefix` + `alt` + `u` | Remove/uninstall plugins not on the plugin list |
 
-> `prefix` + <kbd>alt</kbd> + <kbd>u</kbd>
-> - remove/uninstall plugins not on the plugin list
+### Vim Packages
 
-Update Vim package
+Update Vim packages with:
 
-    vim -c "PackUpdateQuit"
+```bash
+vim -c "PackUpdateQuit"
+```
 
-Copy git config and modify [user], [diff], [merge]
+### Git Config
 
-    cp git/config ~/.config/git/config
+Copy the included git config and modify the `[user]`, `[diff]`, and `[merge]` sections to match your environment:
+
+```bash
+cp git/config ~/.config/git/config
+```
+
+---
 
 ## Windows Configuration
 
-Download Git for Windows Portable and add to %PATH%
+### Git
 
-> [https://git-scm.com/install/windows](https://git-scm.com/install/windows)
+Download [Git for Windows Portable](https://git-scm.com/install/windows) and add it to `%PATH%`.
 
-Git config
+Git config files are located at:
 
-    %USERPROFILE%\.config\git\config
-    %USERPROFILE%\.config\git\ignore
+```
+%USERPROFILE%\.config\git\config
+%USERPROFILE%\.config\git\ignore
+```
 
-Download Vim zip package and add to %PATH%
+### Vim
 
-> [https://www.vim.org/download.php](https://www.vim.org/download.php)
+Download the [Vim zip package](https://www.vim.org/download.php) and add it to `%PATH%`.
 
-Vim config
+Vim config file is located at:
 
-    %USERPROFILE%\_vimrc
-    git clone https://github.com/k-takata/minpac.git %USERPROFILE%\vimfiles\pack\minpac\opt\minpac
+```
+%USERPROFILE%\_vimrc
+```
+
+Install the [minpac](https://github.com/k-takata/minpac) package manager:
+
+```bash
+git clone https://github.com/k-takata/minpac.git %USERPROFILE%\vimfiles\pack\minpac\opt\minpac
+```
+
+---
 
 ## Miscellaneous
 
-Create symlinks
+### WSL: Create a symlink to the Windows Desktop
 
-    ln -s /mnt/c/Users/<user_name>/Desktop ~/Desktop
+If you're using WSL, you can link the Windows Desktop to your Linux home directory:
 
+```bash
+ln -s /mnt/c/Users/<user_name>/Desktop ~/Desktop
+```
 
+Replace `<user_name>` with your actual Windows username.
+
+---
 
 [alacritty]: <https://github.com/alacritty/alacritty>
 [oh-my-zsh]: <https://github.com/ohmyzsh/ohmyzsh>
