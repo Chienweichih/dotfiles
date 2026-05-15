@@ -45,6 +45,9 @@ noremap \ ,
 set suffixesadd+=.c,.h,.cpp,.hpp
 " set path+=src/**,include/**
 
+"""" ===== Practical Vim Tip 61: Grok Vim’s Registers =====
+set clipboard=unnamed,unnamedplus
+
 """" ===== Practical Vim Tip 64: Interact with the System Clipboard =====
 set autoindent
 
@@ -70,41 +73,34 @@ xnoremap & :&&<CR>
 set spelllang+=cjk
 nnoremap <leader>S :set spell!<CR>
 
-"""" ===== options =====
-set smarttab
-set smartindent
+"""" ===== https://blog.sanctum.geek.nz/vim-command-typos/ =====
+if has("user_commands")
+  command! -bang -nargs=? -complete=file E e<bang> <args>
+  command! -bang -nargs=? -complete=file W w<bang> <args>
+  command! -bang -nargs=? -complete=file Wq wq<bang> <args>
+  command! -bang -nargs=? -complete=file WQ wq<bang> <args>
+  command! -bang Wa wa<bang>
+  command! -bang WA wa<bang>
+  command! -bang Q q<bang>
+  command! -bang QA qa<bang>
+  command! -bang Qa qa<bang>
+endif
 
 """" ===== syntax =====
 set background=light
 syntax enable
-highlight LineNr     ctermfg=145
-highlight Search     ctermbg=227
-highlight MatchParen ctermbg=227
-highlight DiffAdd    ctermfg=black  cterm=bold
-highlight DiffText   ctermbg=yellow ctermfg=red  cterm=bold
-highlight DiffChange ctermbg=none   ctermfg=none cterm=bold
-
-"""" ===== gvim =====
 if has('gui_running')
-  set guifont=Cascadia\ Mono:h12
-  highlight Normal     guifg=#000000   guibg=#FFFFFF
-  highlight Comment    guifg=#00AA00   gui=none
-  highlight Constant   guifg=#AA0000   gui=none
-  highlight String     guifg=#AA0000   gui=none
-  highlight Identifier guifg=#000000   gui=none
-  highlight Statement  guifg=#AA5500   gui=bold
-  highlight PreProc    guifg=#AA00AA   gui=none
-  highlight Type       guifg=#0000AA   gui=none
-  highlight Special    guifg=#00AAAA   gui=none
-  highlight Underlined guifg=#0000AA   gui=underline
-  highlight Todo       guifg=#000000   guibg=#AA5500
-  highlight LineNr     guifg=Gray
-  highlight Search     guibg=Yellow
-  highlight MatchParen guibg=Yellow
-  highlight DiffAdd    guibg=green     guifg=black
-  highlight DiffText   guibg=yellow    guifg=red
-  highlight DiffChange guibg=white     guifg=black
-  highlight DiffDelete guibg=lightblue guifg=lightblue
+  if has('win32') || has('win64')
+    set guifont=Cascadia_Mono:h12:cANSI:qDRAFT
+  else
+    set guifont=Cascadia\ Mono\ 12
+  endif
+  set guioptions=c
+else
+  colorscheme dim
+  highlight LineNr     ctermfg=145
+  highlight Search     ctermbg=227
+  highlight MatchParen ctermbg=227
 endif
 
 """" ===== ARM9/arm-syntax-vim =====
@@ -125,38 +121,21 @@ function! GitConflictLines()
 endfunction
 
 let g:lightline = {
-      \ 'colorscheme': 'ayu_light',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'gitconflict' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-      \ 'component_expand': {
-      \   'gitconflict': 'GitConflictLines'
-      \ },
-      \ 'component_type': {
-      \   'gitconflict': 'warning'
-      \ }
-      \ }
-
-"""" ===== yank to system clipboard =====
-if executable('win32yank.exe')
-  let s:clip = 'win32yank.exe -i --crlf'
-elseif executable('wl-copy')
-  let s:clip = 'wl-copy'
-elseif executable('xclip')
-  let s:clip = 'xclip -selection clipboard -in'
-elseif executable('pbcopy')
-  let s:clip = 'pbcopy'
-endif
-if exists('s:clip')
-  augroup YankClipboard
-    autocmd!
-    autocmd TextYankPost * silent! call system(s:clip, join(v:event.regcontents, "\n"))
-  augroup END
-endif
+  \ 'colorscheme': 'ayu_light',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'gitconflict' ] ]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'FugitiveHead'
+  \ },
+  \ 'component_expand': {
+  \   'gitconflict': 'GitConflictLines'
+  \ },
+  \ 'component_type': {
+  \   'gitconflict': 'warning'
+  \ }
+  \ }
 
 """" ===== preservim/tagbar =====
 nnoremap <silent> <leader>t :TagbarToggle<CR>
@@ -173,21 +152,6 @@ let $FZF_DEFAULT_OPTS = $FZF_DEFAULT_OPTS . ' --bind ctrl-u:half-page-up,ctrl-d:
 let g:fzf_layout = { 'down': '40%' }
 let g:fzf_vim = {}
 let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'query':   ['fg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>s :GFiles?<CR>
 nnoremap <leader>b :Buffers<CR>
@@ -200,16 +164,6 @@ xnoremap <leader>/ y:BLines <C-R>"
 
 """" ===== Modern Vim Tip 17: Seamlessly Navigating tmux Panes and Vim Windows =====
 let g:tmux_navigator_no_wrap = 1
-
-"""" ===== Modern Vim Tip 24: Making Undo Persist Between Sessions =====
-set undofile
-if !has('nvim')
-  set undodir=~/.vim/undo
-endif
-augroup vimrc
-  autocmd!
-  autocmd BufWritePre /tmp/* setlocal noundofile
-augroup END
 
 """" ===== Modern Vim Tip 6: Managing Plugins with minpac =====
 function! PackInit() abort
@@ -243,6 +197,7 @@ function! PackInit() abort
   """" ===== others =====
   call minpac#add('ConradIrwin/vim-bracketed-paste')
   call minpac#add('andymass/vim-matchup')
+  call minpac#add('jeffkreeftmeijer/vim-dim')
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('junegunn/gv.vim')
   call minpac#add('preservim/tagbar')

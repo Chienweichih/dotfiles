@@ -30,6 +30,7 @@ My personal dotfiles for Linux and Windows, managed with [Dotbot][dotbot].
 | Tool | Description |
 |---|---|
 | [Cascadia Code][cascadia-code] | Programming font with ligatures support |
+| [vimx][vim] | Vim with clipboard support (+clipboard) |
 | [tig][tig] | Text-mode interface for browsing Git repositories |
 | [Universal Ctags][ctags] | Source code indexing tool for code navigation |
 | [fzf][fzf] | Command-line fuzzy finder |
@@ -133,13 +134,23 @@ Replace `<user_name>` with your actual Windows username.
 
 ---
 
+[dotbot]: <https://github.com/anishathalye/dotbot>
+
 [alacritty]: <https://github.com/alacritty/alacritty>
 [oh-my-zsh]: <https://github.com/ohmyzsh/ohmyzsh>
 [tmux]: <https://github.com/tmux/tmux>
-[cascadia-code]: <https://github.com/microsoft/cascadia-code>
+[pcalc]: <https://github.com/alt-romes/programmer-calculator>
+
+[wl-clipboard]: <https://github.com/bugaevc/wl-clipboard>
+[meld]: <https://gitlab.gnome.org/GNOME/meld>
 [terminal]: <https://github.com/microsoft/terminal>
 [doublecmd]: <https://github.com/doublecmd/doublecmd>
 [winscp]: <https://github.com/winscp/winscp>
+[win32yank]: <https://github.com/equalsraf/win32yank>
+[winmerge]: <https://github.com/WinMerge/winmerge>
+
+[cascadia-code]: <https://github.com/microsoft/cascadia-code>
+[vim]: <https://github.com/vim/vim>
 [tig]: <https://github.com/jonas/tig>
 [ctags]: <https://github.com/universal-ctags/ctags>
 [fzf]: <https://github.com/junegunn/fzf>
@@ -147,9 +158,3 @@ Replace `<user_name>` with your actual Windows username.
 [rg]: <https://github.com/BurntSushi/ripgrep>
 [delta]: <https://github.com/dandavison/delta>
 [coan]: <https://coan2.sourceforge.net/index.php>
-[pcalc]: <https://github.com/alt-romes/programmer-calculator>
-[wl-clipboard]: <https://github.com/bugaevc/wl-clipboard>
-[win32yank]: <https://github.com/equalsraf/win32yank>
-[meld]: <https://gitlab.gnome.org/GNOME/meld>
-[winmerge]: <https://github.com/WinMerge/winmerge>
-[dotbot]: <https://github.com/anishathalye/dotbot>
