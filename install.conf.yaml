@@ -13,7 +13,7 @@
     ~/.config/tmux/tmux.conf: term/tmux.conf
     ~/.config/nvim/init.vim: vim/init.vim
     ~/.vimrc: vim/vimrc
-    $ZSH/custom/bruce.zsh: term/zshrc
+    $ZSH/custom/dotfiles.zsh: term/zshrc
 
 - create:
     - ~/.local/bin

@@ -1,6 +1,11 @@
 #!/bin/bash
 
 folder="${1:-.}"
-OPEN_CMD="xdg-open"
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    OPEN_CMD="open"
+else
+    OPEN_CMD="xdg-open"
+fi
 
 $OPEN_CMD "$folder"
