@@ -114,6 +114,10 @@ set laststatus=2
 set noshowmode
 set shortmess-=S
 
+function! TagbarMethod() abort
+    return tagbar#currenttag('%s', '', 'f')
+endfunction
+
 function! GitConflictLines()
   let l:patterns = ['^<<<<<<< ']
   let l:conflict_lines = filter(range(1, line('$')), 'match(getline(v:val), join(l:patterns, "\\|")) != -1')
@@ -124,10 +128,11 @@ let g:lightline = {
   \ 'colorscheme': 'ayu_light',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'gitconflict' ] ]
+  \             [ 'gitbranch', 'readonly', 'filename', 'method', 'modified', 'gitconflict' ] ]
   \ },
   \ 'component_function': {
-  \   'gitbranch': 'FugitiveHead'
+  \   'gitbranch': 'FugitiveHead',
+  \   'method': 'TagbarMethod'
   \ },
   \ 'component_expand': {
   \   'gitconflict': 'GitConflictLines'
