@@ -149,6 +149,9 @@ let g:tagbar_left = 1
 let g:tagbar_width = max([25, winwidth(0) / 5])
 let g:tagbar_sort = 0
 
+"""" ===== tpope/vim-commentary =====
+autocmd FileType c,cpp setlocal commentstring=//\ %s
+
 """" ===== tpope/vim-vinegar =====
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 

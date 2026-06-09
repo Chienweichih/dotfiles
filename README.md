@@ -15,16 +15,6 @@ My personal dotfiles for Linux and Windows, managed with [Dotbot][dotbot].
 | [wl-clipboard][wl-clipboard] | Wayland clipboard utilities (`wl-copy` / `wl-paste`) |
 | [Meld][meld] | Visual diff and merge tool |
 
-### Windows
-
-| Tool | Description |
-|---|---|
-| [Windows Terminal][terminal] | Modern terminal application for Windows |
-| [Double Commander][doublecmd] | Two-panel file manager |
-| [WinSCP][winscp] | SFTP/FTP client for file transfer |
-| [win32yank][win32yank] | Clipboard tool for Windows, useful with Vim/Neovim |
-| [WinMerge][winmerge] | Visual diff and merge tool for Windows |
-
 ### Cross-platform
 
 | Tool | Description |
@@ -55,7 +45,7 @@ Then use [Dotbot][dotbot] to automatically install the dotfiles:
 ./install
 ```
 
-Alternatively, you can manually execute the commands listed in `install.conf.yaml`.
+Alternatively, you can manually execute the commands listed in [install.conf.yaml](install.conf.yaml).
 
 ---
 
@@ -63,7 +53,7 @@ Alternatively, you can manually execute the commands listed in `install.conf.yam
 
 ### Tmux Plugins
 
-Tmux plugins are managed by [TPM (Tmux Plugin Manager)](https://github.com/tmux-plugins/tpm). Use the following key bindings inside a tmux session:
+Tmux plugins are managed by [TPM (Tmux Plugin Manager)][tpm]. Use the following key bindings inside a tmux session:
 
 | Key Binding | Action |
 |---|---|
@@ -91,9 +81,11 @@ cp git/config ~/.config/git/config
 
 ## Windows Configuration
 
-### Git
+### WinGet
 
-Download [Git for Windows Portable](https://git-scm.com/install/windows) and add it to `%PATH%`.
+Execute the commands listed in [term/win/install.ps1](term/win/install.ps1).
+
+### Git
 
 Git config files are located at:
 
@@ -104,15 +96,13 @@ Git config files are located at:
 
 ### Vim
 
-Download the [Vim zip package](https://www.vim.org/download.php) and add it to `%PATH%`.
-
 Vim config file is located at:
 
 ```
 %USERPROFILE%\_vimrc
 ```
 
-Install the [minpac](https://github.com/k-takata/minpac) package manager:
+Install the [minpac][minpac] package manager:
 
 ```bash
 git clone https://github.com/k-takata/minpac.git %USERPROFILE%\vimfiles\pack\minpac\opt\minpac
@@ -135,20 +125,12 @@ Replace `<user_name>` with your actual Windows username.
 ---
 
 [dotbot]: <https://github.com/anishathalye/dotbot>
-
 [alacritty]: <https://github.com/alacritty/alacritty>
 [oh-my-zsh]: <https://github.com/ohmyzsh/ohmyzsh>
 [tmux]: <https://github.com/tmux/tmux>
 [pcalc]: <https://github.com/alt-romes/programmer-calculator>
-
 [wl-clipboard]: <https://github.com/bugaevc/wl-clipboard>
 [meld]: <https://gitlab.gnome.org/GNOME/meld>
-[terminal]: <https://github.com/microsoft/terminal>
-[doublecmd]: <https://github.com/doublecmd/doublecmd>
-[winscp]: <https://github.com/winscp/winscp>
-[win32yank]: <https://github.com/equalsraf/win32yank>
-[winmerge]: <https://github.com/WinMerge/winmerge>
-
 [cascadia-code]: <https://github.com/microsoft/cascadia-code>
 [vim]: <https://github.com/vim/vim>
 [tig]: <https://github.com/jonas/tig>
@@ -158,3 +140,5 @@ Replace `<user_name>` with your actual Windows username.
 [rg]: <https://github.com/BurntSushi/ripgrep>
 [delta]: <https://github.com/dandavison/delta>
 [coan]: <https://coan2.sourceforge.net/index.php>
+[tpm]: <https://github.com/tmux-plugins/tpm>
+[minpac]: <https://github.com/k-takata/minpac>
