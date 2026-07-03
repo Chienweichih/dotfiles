@@ -45,9 +45,6 @@ noremap \ ,
 set suffixesadd+=.c,.h,.cpp,.hpp
 " set path+=src/**,include/**
 
-"""" ===== Practical Vim Tip 61: Grok Vim’s Registers =====
-set clipboard=unnamed,unnamedplus
-
 """" ===== Practical Vim Tip 64: Interact with the System Clipboard =====
 set autoindent
 
@@ -98,9 +95,13 @@ if has('gui_running')
   set guioptions=c
 else
   colorscheme dim
-  highlight LineNr     ctermfg=145
-  highlight Search     ctermbg=227
-  highlight MatchParen ctermbg=227
+  highlight DiffAdd    ctermbg=LightGreen
+  highlight DiffChange ctermbg=LightYellow
+  highlight DiffDelete ctermbg=LightRed
+  highlight DiffText   ctermbg=LightCyan
+  highlight Visual     ctermbg=LightCyan    cterm=NONE
+  highlight Search     ctermbg=LightYellow
+  highlight MatchParen ctermbg=LightYellow
 endif
 
 """" ===== ARM9/arm-syntax-vim =====

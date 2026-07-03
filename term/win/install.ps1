@@ -22,7 +22,6 @@ winget install TeraTermProject.teraterm5
 # Development
 winget install Git.Git
 winget install vim.vim
-winget install equalsraf.win32yank
 
 # CLI Tools
 winget install Microsoft.WindowsTerminal

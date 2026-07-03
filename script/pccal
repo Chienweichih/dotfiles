@@ -6,4 +6,4 @@ else
     IM_CMD="convert"
 fi
 
-ccal -p -b -u "$@" | $IM_CMD -density 1200 - -resize 25% -gravity center -background "#008264" -extent 3840x2160 calendar.png
+ccal -p -b -u "$@" | $IM_CMD -density 1200 - -resize 25% -gravity center -background "#017961" -extent 3840x2160 calendar.png

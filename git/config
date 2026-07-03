@@ -4,6 +4,7 @@
 
 [core]
 	editor = vim
+	# editor =  \"C:/Program Files/Vim/vim92/vim.exe\"
 	filemode = false
 	pager = delta
 	# autocrlf = true    # enable this line in Windows
@@ -29,22 +30,11 @@
 	wrap-max-lines = 0
 
 [diff]
-	tool = pdifftool_diff
-
-[merge]
-	tool = pdifftool_merge
-
-[mergetool]
-	keepBackup = false
+	tool = vimdiff
+	# tool = winmerge
 
 [difftool "winmerge"]
-	cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -u -e \"$LOCAL\" \"$REMOTE\"
-
-[difftool "pdifftool_diff"]
-	cmd = pdifftool $LOCAL $REMOTE
-
-[mergetool "pdifftool_merge"]
-	cmd = pdifftool $LOCAL $BASE $REMOTE $MERGED
+	cmd = \"$LOCALAPPDATA/Programs/WinMerge/WinMergeU.exe\" -u -e \"$LOCAL\" \"$REMOTE\"
 
 # Enable this if you want to store password
 # [credential]

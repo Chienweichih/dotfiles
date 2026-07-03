@@ -12,7 +12,6 @@ My personal dotfiles for Linux and Windows, managed with [Dotbot][dotbot].
 | [Oh My Zsh][oh-my-zsh] | Zsh shell framework with plugins and themes |
 | [tmux][tmux] | Terminal multiplexer for managing multiple sessions |
 | [Programmer Calculator][pcalc] | Calculator designed for programmers (hex, bin, oct) |
-| [wl-clipboard][wl-clipboard] | Wayland clipboard utilities (`wl-copy` / `wl-paste`) |
 | [Meld][meld] | Visual diff and merge tool |
 
 ### Cross-platform
@@ -20,7 +19,6 @@ My personal dotfiles for Linux and Windows, managed with [Dotbot][dotbot].
 | Tool | Description |
 |---|---|
 | [Cascadia Code][cascadia-code] | Programming font with ligatures support |
-| [vimx][vim] | Vim with clipboard support (+clipboard) |
 | [tig][tig] | Text-mode interface for browsing Git repositories |
 | [Universal Ctags][ctags] | Source code indexing tool for code navigation |
 | [fzf][fzf] | Command-line fuzzy finder |
@@ -50,16 +48,6 @@ Alternatively, you can manually execute the commands listed in [install.conf.yam
 ---
 
 ## Manual Configuration
-
-### Tmux Plugins
-
-Tmux plugins are managed by [TPM (Tmux Plugin Manager)][tpm]. Use the following key bindings inside a tmux session:
-
-| Key Binding | Action |
-|---|---|
-| `prefix` + `I` | Install new plugins and refresh the environment |
-| `prefix` + `U` | Update installed plugins |
-| `prefix` + `alt` + `u` | Remove/uninstall plugins not on the plugin list |
 
 ### Vim Packages
 
@@ -129,10 +117,8 @@ Replace `<user_name>` with your actual Windows username.
 [oh-my-zsh]: <https://github.com/ohmyzsh/ohmyzsh>
 [tmux]: <https://github.com/tmux/tmux>
 [pcalc]: <https://github.com/alt-romes/programmer-calculator>
-[wl-clipboard]: <https://github.com/bugaevc/wl-clipboard>
 [meld]: <https://gitlab.gnome.org/GNOME/meld>
 [cascadia-code]: <https://github.com/microsoft/cascadia-code>
-[vim]: <https://github.com/vim/vim>
 [tig]: <https://github.com/jonas/tig>
 [ctags]: <https://github.com/universal-ctags/ctags>
 [fzf]: <https://github.com/junegunn/fzf>
@@ -140,5 +126,4 @@ Replace `<user_name>` with your actual Windows username.
 [rg]: <https://github.com/BurntSushi/ripgrep>
 [delta]: <https://github.com/dandavison/delta>
 [coan]: <https://coan2.sourceforge.net/index.php>
-[tpm]: <https://github.com/tmux-plugins/tpm>
 [minpac]: <https://github.com/k-takata/minpac>
