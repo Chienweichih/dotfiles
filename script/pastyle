@@ -1,50 +1,99 @@
 #!/bin/bash
-
-# ===================
-# --suffix=none / -n
-# --indent=spaces / --indent=spaces=# / -s#
-# --style=allman / --style=bsd / --style=break / -A1
-# --add-braces / -j
-# --break-closing-braces / -y
-# --attach-closing-while / -xV
-# --indent-switches / -S
-# --indent-continuation=# / -xt#
-# --indent-labels / -L
-# --indent-preproc-block / -xW
-# --indent-preproc-define / -w
-# --convert-tabs / -c
-# --indent-preproc-cond / -xw
-# --indent-col1-comments / -Y
-# --min-conditional-indent=# / -m#
-# --max-continuation-indent=# / -M#
-# --unpad-paren / -U
-# --pad-oper / -p
-# --pad-header / -H
-# --align-pointer=name   / -k3
-# --align-reference=name   / -W3
-# --break-one-line-headers / -xb
-# --max-code-length=#   / -xC#
-# --mode=c
-# --lineend=windows / -z1
-# --lineend=linux   / -z2
 #
-# ref: http://astyle.sourceforge.net/astyle.html
-# ===================
+# pastyle - Format all C source/header files in the current tree using AStyle.
+#
+# Usage:
+#   ./pastyle [linux|windows]
+#     linux   (default) -> use Unix line endings (LF)
+#     windows           -> use Windows line endings (CRLF)
+#
+# AStyle option reference: http://astyle.sourceforge.net/astyle.html
+#   -n      --suffix=none              don't keep .orig backup files
+#   -s4     --indent=spaces=4          indent with 4 spaces
+#   -A1     --style=allman             Allman brace style
+#   -j      --add-braces               add braces to unbraced one-line conditionals
+#   -y      --break-closing-braces     break closing braces before else/catch/etc.
+#   -xV     --attach-closing-while     attach closing "while" of do-while to the brace
+#   -S      --indent-switches          indent "switch" blocks
+#   -xt3    --indent-continuation=3    indent continuation lines by 3 extra spaces
+#   -L      --indent-labels            indent labels so they align with the code
+#   -xW     --indent-preproc-block     indent preprocessor blocks
+#   -w      --indent-preproc-define    indent multi-line #define statements
+#   -c      --convert-tabs             convert tabs to spaces
+#   -xw     --indent-preproc-cond      indent preprocessor conditionals
+#   -Y      --indent-col1-comments     indent comments starting in column 1
+#   -m0     --min-conditional-indent=0 no minimum indent for conditionals
+#   -M120   --max-continuation-indent  cap continuation-line indent at 120 cols
+#   -U      --unpad-paren              remove extra padding around parentheses
+#   -p      --pad-oper                 pad operators with spaces
+#   -H      --pad-header               pad header keywords (if/for/while) with a space
+#   -k3     --align-pointer=name       align pointer '*' with the variable name
+#   -W3     --align-reference=name     align reference '&' with the variable name
+#   -xb     --break-one-line-headers   break one-line if/while/for statements
+#   -xC200  --max-code-length=200      wrap lines longer than 200 characters
+#           --mode=c                   treat input as C/C++ source
 
-ASTYLE_PARAM="-n -s4 -A1 -j -y -xV -S -xt3 -L -xW -w -c -xw -Y -m0 -M120 -U -p -H -k3 -W3 -xb -xC200 --mode=c"
+set -euo pipefail
 
-if [ "$(echo ${1:-"linux"} | tr '[:upper:]' '[:lower:]')" = "linux" ]; then
-    ASTYLE_PARAM="$ASTYLE_PARAM -z2"
-else
-    ASTYLE_PARAM="$ASTYLE_PARAM -z1"
-fi
+readonly EXCLUDE_PATTERN="^$"
 
-EXCLUDE="^$"
+readonly ASTYLE_BASE_PARAMS=(
+    -n -s4 -A1 -j -y -xV -S -xt3 -L -xW -w -c -xw -Y
+    -m0 -M120 -U -p -H -k3 -W3 -xb -xC200 --mode=c
+)
 
-if echo $(uname -s) | grep -Eq '^(MSYS|MINGW)'; then
-    ASTYLE_CMD="astyle.exe"
-else
-    ASTYLE_CMD="astyle"
-fi
+usage() {
+    echo "Usage: $0 [linux|windows]" >&2
+}
 
-find . \( -name '*.c' -o -name '*.h' \) -print0 | grep -zvE "$EXCLUDE" | xargs -0 $ASTYLE_CMD ${ASTYLE_PARAM} --ascii --formatted
+# Pick the line-ending flag based on the target platform (defaults to linux).
+resolve_line_ending_flag() {
+    local platform
+    platform=$(echo "${1:-linux}" | tr '[:upper:]' '[:lower:]')
+
+    case "$platform" in
+        linux)   echo "-z2" ;;
+        windows) echo "-z1" ;;
+        *)
+            echo "Error: unknown platform '$1' (expected 'linux' or 'windows')" >&2
+            usage
+            exit 1
+            ;;
+    esac
+}
+
+# AStyle's Windows binary is named astyle.exe under MSYS/MinGW.
+resolve_astyle_binary() {
+    if uname -s | grep -Eq '^(MSYS|MINGW)'; then
+        echo "astyle.exe"
+    else
+        echo "astyle"
+    fi
+}
+
+format_source_files() {
+    local astyle_cmd="$1"
+    shift
+    local -a astyle_params=("$@")
+
+    find . \( -name '*.c' -o -name '*.h' \) -print0 \
+        | grep -zvE "$EXCLUDE_PATTERN" \
+        | xargs -0 "$astyle_cmd" "${astyle_params[@]}" --ascii --formatted
+}
+
+main() {
+    local line_ending_flag
+    line_ending_flag=$(resolve_line_ending_flag "${1:-}")
+
+    local astyle_cmd
+    astyle_cmd=$(resolve_astyle_binary)
+
+    if ! command -v "$astyle_cmd" >/dev/null 2>&1; then
+        echo "Error: '$astyle_cmd' not found in PATH. Please install AStyle first." >&2
+        exit 1
+    fi
+
+    format_source_files "$astyle_cmd" "${ASTYLE_BASE_PARAMS[@]}" "$line_ending_flag"
+}
+
+main "$@"

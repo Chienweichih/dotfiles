@@ -1,7 +1,6 @@
 #!/bin/bash
+set -euo pipefail
 
 KEYWORD="${1:-OPENING}"
 
-rg --files | \
-ctags --verbose=yes --recurse --links=no -L - 2>&1 | \
-rg "$KEYWORD"
+rg --files | ctags --verbose=yes --recurse --links=no -L - 2>&1 | rg -- "$KEYWORD"
