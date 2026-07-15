@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# pcoan - Wrapper around `coan` for the typical two-step ifdef-analysis
+#         workflow used in this codebase:
+#           1. defs    - scan all .c/.h files and dump candidate macro
+#                        symbols to a "defs" file for manual review/editing.
+#           2. source  - given a (usually hand-edited) argfile of macro
+#                        definitions, run coan over the source tree.
+#
+# Usage:
+#   ./pcoan defs
+#   ./pcoan source [argfile]      (argfile default: "argfile")
+#
+# Typical workflow:
+#   1. ./pcoan defs                 # writes ./defs with candidate macros
+#   2.   <edit defs into an argfile, deciding which macros are defined>
+#   3. ./pcoan source my_argfile    # apply that decision to the source tree
+
+set -euo pipefail
+
+readonly DEFS_OUTPUT="defs"
+readonly DEFAULT_ARGFILE="argfile"
+
+usage() {
+    cat >&2 << EOF
+Usage:
+  $0 defs
+      Scan all .c/.h files recursively and write candidate macro symbols to '${DEFS_OUTPUT}'.
+
+  $0 source [argfile]
+      Run coan over the source tree using the given argfile (default: '${DEFAULT_ARGFILE}').
+EOF
+}
+
+cmd_defs() {
+    coan defs --recurse --filter c,h --keepgoing --locate . > "$DEFS_OUTPUT"
+    echo "Wrote candidate macro definitions to '${DEFS_OUTPUT}'."
+}
+
+cmd_source() {
+    local argfile="${1:-$DEFAULT_ARGFILE}"
+
+    if [ ! -f "$argfile" ]; then
+        echo "Error: argfile '${argfile}' not found" >&2
+        exit 1
+    fi
+
+    coan source --file "$argfile" --recurse --filter c,h --keepgoing .
+}
+
+main() {
+    if [ "$#" -lt 1 ]; then
+        usage
+        exit 1
+    fi
+
+    local subcommand="$1"
+    shift
+
+    case "$subcommand" in
+        defs)
+            cmd_defs "$@"
+            ;;
+        source)
+            cmd_source "$@"
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Error: unknown subcommand '$subcommand'" >&2
+            usage
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"

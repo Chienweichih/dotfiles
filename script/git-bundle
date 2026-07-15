@@ -1,14 +1,107 @@
 #!/bin/bash
+#
+# git-bundle - Recursively find all git repositories under a directory and
+#              create a `git bundle` (full backup) for each one, mirroring
+#              the source directory structure under the output directory.
+#
+# Usage:
+#   ./git-bundle [search_root] [output_base]
+#     search_root  (default: ~/code)              directory to scan for repos
+#     output_base  (default: ~/archive_code_bundle) where bundles are written
+#
+# Notes:
+#   - A single repo failing to bundle (e.g. empty or corrupted repo) is
+#     reported and skipped, it does not abort the rest of the run.
+#   - Follows symlinks while searching (-L), same as the original script.
 
-search_root="${1:-$HOME/code}"
-output_base="${2:-$HOME/archive_code_bundle}"
+set -uo pipefail
 
-find -L "$search_root" -type d -name ".git" | while read -r git_dir; do
-  repo_dir="$(dirname "$git_dir")"
-  relative_path="${repo_dir#$search_root/}"
-  bundle_output_dir="$output_base/$relative_path"
-  mkdir -p "$bundle_output_dir"
-  bundle_file="$bundle_output_dir/repo.bundle"
-  git -C "$repo_dir" bundle create "$bundle_file" --all
-  echo "Created bundle: $bundle_file"
-done
+usage() {
+    echo "Usage: $0 [search_root] [output_base]" >&2
+}
+
+# Strip a single trailing slash so path-prefix comparisons below are reliable.
+strip_trailing_slash() {
+    local path="$1"
+    echo "${path%/}"
+}
+
+# Compute repo_dir's path relative to search_root. Falls back to "." when
+# repo_dir *is* search_root (i.e. search_root itself is a git repo).
+relative_repo_path() {
+    local search_root="$1"
+    local repo_dir="$2"
+
+    if [ "$repo_dir" = "$search_root" ]; then
+        echo "."
+    else
+        echo "${repo_dir#"$search_root"/}"
+    fi
+}
+
+# Create a single bundle for one repo. Returns non-zero on failure instead
+# of killing the whole script, so the caller can keep going.
+bundle_one_repo() {
+    local search_root="$1"
+    local output_base="$2"
+    local git_dir="$3"
+
+    local repo_dir relative_path bundle_output_dir bundle_file
+    repo_dir="$(dirname "$git_dir")"
+    relative_path="$(relative_repo_path "$search_root" "$repo_dir")"
+    bundle_output_dir="$output_base/$relative_path"
+    bundle_file="$bundle_output_dir/repo.bundle"
+
+    mkdir -p "$bundle_output_dir"
+
+    if git -C "$repo_dir" bundle create "$bundle_file" --all; then
+        echo "Created bundle: $bundle_file"
+        return 0
+    else
+        echo "Warning: failed to bundle repo at '$repo_dir', skipping" >&2
+        return 1
+    fi
+}
+
+main() {
+    if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+        usage
+        exit 0
+    fi
+
+    local search_root output_base
+    search_root="${1:-$HOME/code}"
+    output_base="${2:-$HOME/archive_code_bundle}"
+
+    if [ ! -d "$search_root" ]; then
+        echo "Error: search_root '$search_root' does not exist or is not a directory" >&2
+        exit 1
+    fi
+
+    # Resolve to absolute paths. This matters because `git -C "$repo_dir"`
+    # changes git's working directory before it parses other arguments, so a
+    # relative $bundle_file would otherwise be misinterpreted as relative to
+    # the repo instead of the directory the script was run from.
+    search_root="$(strip_trailing_slash "$(cd "$search_root" && pwd)")"
+    mkdir -p "$output_base"
+    output_base="$(strip_trailing_slash "$(cd "$output_base" && pwd)")"
+
+    local total=0 succeeded=0 failed=0
+    local git_dir
+
+    while IFS= read -r -d '' git_dir; do
+        total=$((total + 1))
+        if bundle_one_repo "$search_root" "$output_base" "$git_dir"; then
+            succeeded=$((succeeded + 1))
+        else
+            failed=$((failed + 1))
+        fi
+    done < <(find -L "$search_root" -type d -name ".git" -print0)
+
+    echo "----"
+    echo "Done: ${succeeded}/${total} bundled, ${failed} failed."
+
+    [ "$failed" -eq 0 ]
+}
+
+main "$@"

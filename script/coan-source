@@ -1,5 +1,0 @@
-#!/bin/bash
-
-ARGFILE="${1:-argfile}"
-
-coan source --file "$ARGFILE" --recurse --filter c,h --keepgoing .

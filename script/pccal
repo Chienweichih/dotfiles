@@ -1,9 +1,202 @@
 #!/bin/bash
+set -euo pipefail
 
-if command -v magick >/dev/null 2>&1; then
-    IM_CMD="magick"
-else
-    IM_CMD="convert"
+# ==============================================================================
+# Usage: ./pccal [year] [single|triple]
+#   year   - defaults to current year
+#   mode   - triple: previous/current/next month stacked per wallpaper (default)
+#            single: one month per wallpaper
+#   clean  - ./pccal clean  removes generated files
+#
+# Prerequisites: ccal (https://github.com/Chienweichih/ccal), imagemagick,
+# ghostscript (required by imagemagick to process postscript files)
+# ==============================================================================
+
+MONTH_DIR="months"
+OUTPUT_DIR="wallpapers"
+
+# [Mobile Settings]
+CANVAS_W_MOBILE=1080
+CANVAS_H_MOBILE=2424
+BG_COLOR_MOBILE="#0A1420"
+SCALE_M_PCT=80    # single mode: % of screen WIDTH the month should occupy
+SCALE_M3_PCT=90   # triple mode: % of screen HEIGHT the 3 months should occupy
+SHIFT_UP_PX=0
+
+# [Desktop Settings]
+CANVAS_W_DESKTOP=3840
+CANVAS_H_DESKTOP=2160
+BG_COLOR_DESKTOP="#017961"
+SCALE_D_PCT=80    # % of screen height the calendar should occupy
+
+# ---- postscript layout constants ----
+# Measured from ccal v2.5.3 `-p -b -u` EPS output. If ccal is upgraded and the
+# layout looks wrong (title overlap, wrong crop grid), re-measure these.
+readonly PS_TITLE_H=31.68   # title block height, in PostScript points
+readonly PS_CANVAS_H=441    # full page height (738 - 297), used for density scaling
+readonly PS_MONTH_W=139.75  # single-month width (559 / 4), used for "single" mode scaling
+
+# ==============================================================================
+# Functions
+# ==============================================================================
+
+im_identify() {
+    if [ "$IM_CMD" = "magick" ]; then magick identify "$@"; else identify "$@"; fi
+}
+
+# pixels-per-inch needed so that ps_points maps onto target_pixels
+calculate_density() {
+    local target_pixels=$1 ps_points=$2
+    im_identify -format "%[fx:int(($target_pixels/$ps_points)*72)]" xc:
+}
+
+# how many pixels to -chop off the top to remove the "YYYY" title, at a given density
+calculate_chop_px() {
+    local title_pt=$1 density=$2
+    im_identify -format "%[fx:int(($title_pt/72)*$density)]" xc:
+}
+
+# given a target pixel size, returns "density chop_px" for rendering at that size
+resolve_density_and_chop() {
+    local target_pixels=$1 ps_ref_dim=$2
+    local density chop_px
+    density=$(calculate_density "$target_pixels" "$ps_ref_dim")
+    chop_px=$(calculate_chop_px "$PS_TITLE_H" "$density")
+    echo "$density $chop_px"
+}
+
+validate_year() {
+    local y=$1
+    if ! [[ "$y" =~ ^-?[0-9]+$ ]] || (( 10#${y#-} < 1700 || 10#${y#-} > 2290 )); then
+        echo "Error: YEAR must be a number between 1700 and 2290, got '$y'" >&2
+        exit 1
+    fi
+}
+
+# Renders one year's full calendar and splits it into 12 monthly PNGs at
+# "$MONTH_DIR/<year>/month_MM.png". Every year must be split with the SAME
+# density/chop so month images come out at identical pixel dimensions.
+#
+# The two sed passes strip ccal's decorative grid lines and the giant faint
+# "1".."12" watermark digit behind each month. The color substitution recolors
+# the default (black) text to near-white (0.85 gray) so plain weekdays read
+# against a dark wallpaper; Sunday/Saturday keep their own red/green since
+# those are set explicitly elsewhere in the EPS.
+generate_year_months() {
+    local y=$1 density=$2 chop_px=$3
+    local out_dir="$MONTH_DIR/$y"
+    local eps_file="$out_dir/$y.eps"
+
+    validate_year "$y"
+    mkdir -p "$out_dir"
+    ccal -p -b -u "$y" > "$eps_file"
+
+    sed -e '/% Grid lines/,/grestore/d' \
+        -e '/% Month number/,/grestore/d' \
+        "$eps_file" \
+        | sed 's/^gsave 30 300 moveto currentpoint translate$/0.85 0.85 0.85 setrgbcolor\n&/' \
+        | $IM_CMD -density "$density" ps:- \
+        -chop 0x"$chop_px"+0+0 \
+        -crop 4x3@ \
+        +repage \
+        -scene 1 \
+        +adjoin "$out_dir/month_%02d.png"
+}
+
+month_image_path() {
+    local y=$1 m=$2
+    printf '%s/%s/month_%02d.png' "$MONTH_DIR" "$y" "$m"
+}
+
+# ==============================================================================
+# clean
+# ==============================================================================
+
+if [ "${1:-}" = "clean" ]; then
+    rm -rf "$MONTH_DIR" "$OUTPUT_DIR"
+    echo "cleaned: $MONTH_DIR $OUTPUT_DIR"
+    exit 0
 fi
 
-ccal -p -b -u "$@" | $IM_CMD -density 1200 - -resize 25% -gravity center -background "#017961" -extent 3840x2160 calendar.png
+# ==============================================================================
+# Setup
+# ==============================================================================
+
+if command -v magick >/dev/null 2>&1; then IM_CMD="magick"; else IM_CMD="convert"; fi
+for cmd in ccal "$IM_CMD" gs; do
+    command -v "$cmd" >/dev/null 2>&1 || { echo "Error: Required command '$cmd' is not installed." >&2; exit 1; }
+done
+
+YEAR="${1:-$(date +%Y)}"
+MODE="${2:-triple}"
+case "$MODE" in
+    single|triple) ;;
+    *) echo "Error: mode must be 'single' or 'triple', got '$MODE'" >&2; exit 1 ;;
+esac
+validate_year "$YEAR"
+
+if [ "$MODE" = "triple" ]; then
+    # January's previous month is last December, December's next month is next
+    # January, so triple mode also needs the two neighboring years generated.
+    if (( 10#$YEAR == 1700 || 10#$YEAR == 2290 )); then
+        echo "Error: triple mode requires YEAR between 1701 and 2289 (needs YEAR-1/YEAR+1 too), got '$YEAR'" >&2
+        exit 1
+    fi
+    PREV_YEAR=$((10#$YEAR - 1))
+    NEXT_YEAR=$((10#$YEAR + 1))
+fi
+mkdir -p "$MONTH_DIR" "$OUTPUT_DIR"
+
+# ==============================================================================
+# Generate mobile month images
+# ==============================================================================
+
+if [ "$MODE" = "triple" ]; then
+    read -r DENSITY_M CHOP_PX_M < <(resolve_density_and_chop $(( CANVAS_H_MOBILE * SCALE_M3_PCT / 100 )) "$PS_CANVAS_H")
+    generate_year_months "$YEAR" "$DENSITY_M" "$CHOP_PX_M"
+    generate_year_months "$PREV_YEAR" "$DENSITY_M" "$CHOP_PX_M"
+    generate_year_months "$NEXT_YEAR" "$DENSITY_M" "$CHOP_PX_M"
+else
+    read -r DENSITY_M CHOP_PX_M < <(resolve_density_and_chop $(( CANVAS_W_MOBILE * SCALE_M_PCT / 100 )) "$PS_MONTH_W")
+    generate_year_months "$YEAR" "$DENSITY_M" "$CHOP_PX_M"
+fi
+echo "year: $YEAR (mode: $MODE, Mobile Density: $DENSITY_M, Chop: ${CHOP_PX_M}px)"
+
+# ==============================================================================
+# Build one mobile wallpaper per month
+# ==============================================================================
+
+for MONTH in $(seq -w 1 12); do
+    M=$((10#$MONTH))
+    CUR_IMG=$(month_image_path "$YEAR" "$M")
+
+    if [ "$MODE" = "triple" ]; then
+        if (( M == 1 )); then PREV_IMG=$(month_image_path "$PREV_YEAR" 12); else PREV_IMG=$(month_image_path "$YEAR" $((M - 1))); fi
+        if (( M == 12 )); then NEXT_IMG=$(month_image_path "$NEXT_YEAR" 1); else NEXT_IMG=$(month_image_path "$YEAR" $((M + 1))); fi
+        STACK=("$PREV_IMG" "$CUR_IMG" "$NEXT_IMG")
+    else
+        STACK=("$CUR_IMG")
+    fi
+
+    $IM_CMD -size "${CANVAS_W_MOBILE}x${CANVAS_H_MOBILE}" xc:"$BG_COLOR_MOBILE" \
+        \( "${STACK[@]}" -append \) \
+        -gravity center \
+        -geometry +0-"$SHIFT_UP_PX" \
+        -composite \
+        "$OUTPUT_DIR/calendar_${YEAR}_${MONTH}.png"
+    echo "done: $OUTPUT_DIR/calendar_${YEAR}_${MONTH}.png"
+done
+
+# ==============================================================================
+# Generate the full-year desktop calendar
+# ==============================================================================
+
+EPS_FILE_NAME="$MONTH_DIR/$YEAR/$YEAR.eps"
+DENSITY_D=$(calculate_density $(( CANVAS_H_DESKTOP * SCALE_D_PCT / 100 )) "$PS_CANVAS_H")
+
+$IM_CMD -size "${CANVAS_W_DESKTOP}x${CANVAS_H_DESKTOP}" xc:"$BG_COLOR_DESKTOP" \
+    \( -density "$DENSITY_D" ps:"$EPS_FILE_NAME" \) \
+    -gravity center \
+    -composite \
+    "$OUTPUT_DIR/calendar_${YEAR}.png"
+echo "done: $OUTPUT_DIR/calendar_${YEAR}.png (Desktop Density: $DENSITY_D)"

@@ -1,2 +1,0 @@
-#!/bin/bash
-coan defs --recurse --filter c,h --keepgoing --locate . > defs
