@@ -16,6 +16,7 @@ set expandtab
 """" ===== Practical Vim Tip 32: Tab-Complete Your Ex Commands =====
 set wildmenu
 set wildmode=full
+set wildignore+=*/.git/*,*.o,*.obj,*.out,*.exe,*.a,*.so,*.d,tags
 
 """" ===== Practical Vim Tip 34: Recall Commands from History =====
 set history=200
@@ -37,7 +38,7 @@ cnoremap <expr> %%  getcmdtype() == ':' ? fnameescape(expand('%:h')).'/' : '%%'
 set nowrap
 set number
 
-"""" ===== Practical Vim Tip 50: Don’t Throw Away the Reverse Character Search Command =====
+"""" ===== Practical Vim Tip 50: Don't Throw Away the Reverse Character Search Command =====
 let mapleader=","
 noremap \ ,
 
@@ -69,6 +70,9 @@ xnoremap & :&&<CR>
 """" ===== Practical Vim Tip 119: Spell Check Your Work =====
 set spelllang+=cjk
 nnoremap <leader>S :set spell!<CR>
+
+"""" ===== Custom: Keep some context lines visible above/below the cursor =====
+set scrolloff=5
 
 """" ===== https://blog.sanctum.geek.nz/vim-command-typos/ =====
 if has("user_commands")
@@ -104,8 +108,12 @@ else
   highlight MatchParen ctermbg=LightYellow
 endif
 
-"""" ===== ARM9/arm-syntax-vim =====
-au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+"""" ===== ARM9/arm-syntax-vim & tpope/vim-commentary: filetype tweaks =====
+augroup filetype_extra
+  autocmd!
+  autocmd BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+  autocmd FileType c,cpp setlocal commentstring=//\ %s
+augroup END
 
 """" ===== vim-python/python-syntax =====
 let g:python_highlight_all = 1
@@ -113,7 +121,6 @@ let g:python_highlight_all = 1
 """" ===== itchyny/lightline.vim =====
 set laststatus=2
 set noshowmode
-set shortmess-=S
 
 function! TagbarMethod() abort
     return tagbar#currenttag('%s', '', 'f')
@@ -125,15 +132,37 @@ function! GitConflictLines()
   return !empty(l:conflict_lines) ? '[ ' . join(l:conflict_lines, ' ') . ' ] conflicts' : ''
 endfunction
 
+" search-match counter for statusline, replaces built-in [n/N] message
+function! LightlineSearchCount() abort
+  if v:hlsearch == 0
+    return ''
+  endif
+  let l:result = searchcount({'maxcount': 0, 'timeout': 100})
+  if empty(l:result)
+    return ''
+  endif
+  if get(l:result, 'incomplete', 0) ==# 1
+    return printf('%d/>?', l:result.current)
+  elseif get(l:result, 'incomplete', 0) ==# 2
+    return printf('%d/>%d', l:result.current, l:result.total)
+  else
+    return printf('%d/%d', l:result.current, l:result.total)
+  endif
+endfunction
+
 let g:lightline = {
   \ 'colorscheme': 'ayu_light',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'gitbranch', 'readonly', 'filename', 'method', 'modified', 'gitconflict' ] ]
+  \             [ 'gitbranch', 'readonly', 'filename', 'method', 'modified', 'gitconflict' ] ],
+  \   'right': [ [ 'lineinfo' ],
+  \              [ 'percent' ],
+  \              [ 'searchcount', 'fileencoding', 'filetype' ] ]
   \ },
   \ 'component_function': {
   \   'gitbranch': 'FugitiveHead',
-  \   'method': 'TagbarMethod'
+  \   'method': 'TagbarMethod',
+  \   'searchcount': 'LightlineSearchCount'
   \ },
   \ 'component_expand': {
   \   'gitconflict': 'GitConflictLines'
@@ -143,15 +172,16 @@ let g:lightline = {
   \ }
   \ }
 
+"""" ===== andymass/vim-matchup =====
+" jump with % instead; offscreen hint was hijacking the statusline
+let g:matchup_matchparen_offscreen = {}
+
 """" ===== preservim/tagbar =====
 nnoremap <silent> <leader>t :TagbarToggle<CR>
 set updatetime=100
 let g:tagbar_left = 1
 let g:tagbar_width = max([25, winwidth(0) / 5])
 let g:tagbar_sort = 0
-
-"""" ===== tpope/vim-commentary =====
-autocmd FileType c,cpp setlocal commentstring=//\ %s
 
 """" ===== tpope/vim-vinegar =====
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
@@ -161,7 +191,18 @@ let $FZF_DEFAULT_OPTS = $FZF_DEFAULT_OPTS . ' --bind ctrl-u:half-page-up,ctrl-d:
 let g:fzf_layout = { 'down': '40%' }
 let g:fzf_vim = {}
 let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
-nnoremap <leader>f :GFiles<CR>
+
+" GFiles inside a git repo, Files otherwise
+function! s:ProjectFiles() abort
+  if system('git rev-parse --is-inside-work-tree 2>/dev/null') =~# '^true'
+    GFiles
+  else
+    Files
+  endif
+endfunction
+command! ProjectFiles call s:ProjectFiles()
+
+nnoremap <leader>f :ProjectFiles<CR>
 nnoremap <leader>s :GFiles?<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>o :History<CR>
