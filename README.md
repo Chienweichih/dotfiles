@@ -19,6 +19,8 @@ My personal dotfiles for Linux and Windows, managed with [Dotbot][dotbot].
 | Tool | Description |
 |---|---|
 | [Cascadia Code][cascadia-code] | Programming font with ligatures support |
+| [Sarasa Gothic][sarasa] | CJK-aware monospace font for terminals |
+| [bookokrat][bookokrat] | Terminal EPUB/PDF reader with full HTML rendering |
 | [tig][tig] | Text-mode interface for browsing Git repositories |
 | [Universal Ctags][ctags] | Source code indexing tool for code navigation |
 | [fzf][fzf] | Command-line fuzzy finder |
@@ -119,6 +121,8 @@ Replace `<user_name>` with your actual Windows username.
 [pcalc]: <https://github.com/alt-romes/programmer-calculator>
 [meld]: <https://gitlab.gnome.org/GNOME/meld>
 [cascadia-code]: <https://github.com/microsoft/cascadia-code>
+[sarasa]: <https://github.com/be5invis/Sarasa-Gothic>
+[bookokrat]: <https://github.com/bugzmanov/bookokrat>
 [tig]: <https://github.com/jonas/tig>
 [ctags]: <https://github.com/universal-ctags/ctags>
 [fzf]: <https://github.com/junegunn/fzf>

@@ -32,7 +32,7 @@
             "cursorShape": "filledBox",
             "font": 
             {
-                "face": "Cascadia Mono",
+                "face": "Cascadia Mono, Sarasa Mono TC",
                 "size": 12
             },
             "scrollbarState": "hidden",

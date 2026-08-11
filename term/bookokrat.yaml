@@ -1,0 +1,79 @@
+version: 3
+theme: "PaperColor Light"
+margin: 0
+transparent_background: false
+pdf_scale: 1
+pdf_pan_shift: 0
+pdf_render_mode: page
+pdf_page_layout_mode: single
+epub_column_mode: single
+pdf_enabled: true
+pdf_settings_configured: true
+justify_text: false
+invert_scroll_direction: false
+book_sort_order: by_name
+
+# ============================================================================
+# Lookup Command
+# ============================================================================
+# Shell command to run when you press Space+l on selected text.
+# Use {} as a placeholder for the selected word. If no {} is present,
+# the selected text is appended as a shell-escaped argument.
+#
+# lookup_display controls how output is shown:
+#   popup          - capture stdout and show in a scrollable popup (default)
+#   fire_and_forget - spawn command and move on (e.g., open a browser)
+#
+# Example: CLI dictionary (output shown in popup)
+#   lookup_command: "dict {}"
+#   lookup_display: popup
+#
+# Example: macOS Dictionary.app
+#   lookup_command: "open dict://{}"
+#   lookup_display: fire_and_forget
+#
+# Example: online dictionary in browser
+#   lookup_command: "open 'https://www.merriam-webster.com/dictionary/{}'"
+#   lookup_display: fire_and_forget
+
+# ============================================================================
+# SyncTeX inverse search: editor command to run when you Ctrl+click,
+# secondary-click, or press 'gd' on a PDF rendered from LaTeX.
+# Placeholders: {file}, {line}, {column}
+#
+# Example: neovim via remote socket
+#   synctex_editor: "nvim --server /tmp/nvim.sock --remote-send '<C-\\><C-n>:e {file}<CR>:{line}<CR>'"
+#
+# Example: open in new terminal nvim
+#   synctex_editor: "nvim +{line} {file}"
+
+
+# ============================================================================
+# Custom Themes
+# ============================================================================
+# Add your own themes below. Find Base16 themes at:
+# https://github.com/tinted-theming/schemes
+#
+# To add a theme, uncomment and edit the lines below:
+#
+custom_themes:
+  - scheme: "PaperColor Light"
+    author: "Jon Leopard"
+    base00: "eeeeee"    # Main background
+    base01: "c4c4c4"    # Lighter background (status bars)
+    base02: "9e9e9e"    # Selection background
+    base03: "858585"    # Comments, muted text
+    base04: "6b6b6b"    # Dark foreground
+    base05: "5e5e5e"    # Default text
+    base06: "525252"    # Light foreground
+    base07: "444444"    # Brightest text
+    base08: "d70000"    # Red (errors)
+    base09: "d75f00"    # Orange (constants)
+    base0A: "d75f00"    # Yellow (search)
+    base0B: "008700"    # Green (strings)
+    base0C: "0087af"    # Cyan
+    base0D: "005f87"    # Blue (links)
+    base0E: "8700af"    # Purple (keywords)
+    base0F: "af0000"    # Brown/Pink
+
+

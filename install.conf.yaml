@@ -9,6 +9,7 @@
 
 - link:
     ~/.config/alacritty/alacritty.toml: term/alacritty.toml
+    ~/.config/bookokrat/config.yaml: term/bookokrat.yaml
     ~/.config/git/ignore: git/ignore
     ~/.config/tmux/tmux.conf: term/tmux.conf
     ~/.config/nvim/init.vim: vim/init.vim
